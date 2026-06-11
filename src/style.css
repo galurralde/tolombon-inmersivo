@@ -119,9 +119,9 @@ HEADER
 .titulo h1{
   font-family:var(--font-title);
 
-  font-size:4rem;
+  font-size:4.5rem;
 
-  letter-spacing:2px;
+  letter-spacing:3px;
 
   text-transform:uppercase;
 
@@ -156,6 +156,8 @@ NAVBAR
   color:var(--color-marron);
   font-weight:600;
   transition:.3s;
+  text-transform:uppercase;
+  letter-spacing:1px;
 }
 
 .navbar a:hover{
@@ -281,7 +283,8 @@ RESPONSIVE
   }
 
   .titulo h1{
-    font-size:2.2rem;
+    font-size:2.5rem;
+    letter-spacing:1px;
   }
 
   .titulo p{

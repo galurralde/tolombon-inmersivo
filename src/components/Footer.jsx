@@ -6,7 +6,7 @@ export default function Footer() {
       </strong>
 
       <p>
-        Facultad de Economía - Tecnicatura Universitaria en Gestión de Turismo
+        Facultad de Ciencias Económicas, Juridicas y Sociales - Tecnicatura Universitaria en Gestión de Turismo
       </p>
     </footer>
   );

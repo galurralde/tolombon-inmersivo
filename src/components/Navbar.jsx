@@ -10,7 +10,7 @@ export default function Navbar() {
       </NavLink>
 
       <NavLink to="/gastronomia">
-        Experiencia Gastronómica
+        Experiencia Disponibles
       </NavLink>
 
       <NavLink to="/nosotros">

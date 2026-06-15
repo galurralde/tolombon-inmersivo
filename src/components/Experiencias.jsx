@@ -7,6 +7,13 @@ export default function Experiencias() {
       </h2>
 
       <div className="cards">
+        
+        <article className="card">
+          <h3>Tours por las Ruinas de Tolombon</h3>
+          <p>
+            Visita a sitios arqueológicos, paisajes y memoria comunitaria.
+          </p>
+        </article>
 
         <article className="card">
           <h3>WebAR Histórica</h3>
@@ -16,18 +23,12 @@ export default function Experiencias() {
         </article>
 
         <article className="card">
-          <h3>Gastronomía Ancestral</h3>
+          <h3>Gastronomía Ancestral y Turismo Enológico</h3>
           <p>
             Sabores tradicionales y productos identitarios del territorio.
           </p>
         </article>
 
-        <article className="card">
-          <h3>Patrimonio Territorial</h3>
-          <p>
-            Sitios arqueológicos, paisajes y memoria comunitaria.
-          </p>
-        </article>
 
       </div>
 

@@ -31,6 +31,21 @@ export default function Gastronomia() {
           Sabores con identidad del Valle de Yocavil
         </h3>
 
+        <p className="section-text">
+        La experiencia Tolombón Inmersivo propone completar el recorrido
+        histórico y patrimonial con una propuesta gastronómica regional. Los
+        tapeos elaborados con ingredientes locales permiten descubrir sabores
+        vinculados al territorio, la memoria y las tradiciones de los pueblos
+        originarios.
+        Antes de degustar estos sabores, imaginemos el Valle de Yocavil hace más
+        de cuatro siglos. Los Tolombones cultivaban maíz y quinoa en terrazas
+        agrícolas, recolectaban algarroba de los montes cercanos y conservaban
+        carne mediante el secado al sol para producir charqui. Estos alimentos
+        no solo alimentaban a las familias; también hicieron posible una de las
+        resistencias indígenas más prolongadas de la historia colonial
+        argentina.
+      </p>
+
         <div className="tapeo-card">
           <img src="/img/Tapeo1.png" alt="Tapeo Regional 1" />
         </div>
@@ -50,19 +65,17 @@ export default function Gastronomia() {
         <div className="tapeo-card">
           <img src="/img/Tapeo5.png" alt="Tapeo Regional 5" />
         </div>
+        
       </div>
 
-      <h2 className="section-title">Experiencia Gastronómica</h2>
-
+      <h3 className="subtitulo-gastro">Experiencia Enoturismo</h3>
       <p className="section-text">
-        Antes de degustar estos sabores, imaginemos el Valle de Yocavil hace más
-        de cuatro siglos. Los Tolombones cultivaban maíz y quinoa en terrazas
-        agrícolas, recolectaban algarroba de los montes cercanos y conservaban
-        carne mediante el secado al sol para producir charqui. Estos alimentos
-        no solo alimentaban a las familias; también hicieron posible una de las
-        resistencias indígenas más prolongadas de la historia colonial
-        argentina.
+      Nada mejor para acompañar esta propuesta que un vino de identidad local. Por ello sugerimos conocer los vinos de Bodega Tukma, proyecto que recupera la historia y la esencia del Valle de Yocavil.
+
+      Diversos relatos tradicionales indican que Tukma era el nombre de un antiguo e importante cacique diaguita. Otras interpretaciones sostienen que el término puede traducirse como "valle rico" o "valle floreciente", una referencia directa a la fertilidad y riqueza cultural del territorio.
       </p>
+
+    
 
       <div className="slider-tukma">
         <img
@@ -73,29 +86,10 @@ export default function Gastronomia() {
       </div>
 
       <div className="tukma-box">
-        <h3>Una experiencia gastronómica con identidad del Valle Calchaquí</h3>
+        <h3>Una experiencia gastronómica acompañado de vinos locales</h3>
 
-        <p>
-          La experiencia Tolombón Inmersivo propone completar el recorrido
-          histórico y patrimonial con una propuesta gastronómica regional. Los
-          tapeos elaborados con ingredientes locales permiten descubrir sabores
-          vinculados al territorio, la memoria y las tradiciones de los pueblos
-          originarios.
-        </p>
 
-        <p>
-          Nada mejor para acompañar esta propuesta que un vino de identidad
-          local. Por ello sugerimos conocer los vinos de Bodega Tukma, proyecto
-          que recupera la historia y la esencia del Valle de Yocavil.
-        </p>
 
-        <p>
-          Diversos relatos tradicionales indican que Tukma era el nombre de un
-          antiguo e importante cacique diaguita. Otras interpretaciones
-          sostienen que el término puede traducirse como "valle rico" o "valle
-          floreciente", una referencia directa a la fertilidad y riqueza
-          cultural del territorio.
-        </p>
 
         <div className="tukma-links">
           <a

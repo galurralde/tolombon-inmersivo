@@ -328,6 +328,7 @@ RESPONSIVE
   text-align:center;
 
   line-height:1.8;
+  margin-bottom:50px;
 }
 .hero-badge{
   background:#A3732F;
@@ -729,6 +730,7 @@ TAPEOS
 .tapeos-container{
   max-width:1000px;
   margin:60px auto;
+  
 }
 
 .subtitulo-gastro{
@@ -1147,4 +1149,7 @@ SLIDER TESTIMONIOS
     font-size:1rem;
   }
 
+}
+.gastronomia-intro{
+  margin-bottom:50px;
 }

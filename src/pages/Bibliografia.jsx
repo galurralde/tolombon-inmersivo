@@ -46,14 +46,13 @@ export default function Bibliografia() {
       <div className="bibliografia-tabla">
         <div className="biblio-item">
           <p>
-            Castellanos, M. C., & Williams, V. I. (2023).
+            Fradkin, R. y Garavaglia, J. C. (2009).
             <em>
               {" "}
-              Circuitos de interacción y evidencias materiales entre las
-              quebradas altas del Valle Calchaquí y la Puna (siglos X-XVI)
+               La Argentina colonial: El Río de la Plata entre los siglos XVI y XIX
+
             </em>
-            . Relaciones de la Sociedad Argentina de Antropología, 48(Número
-            Especial 2), 127-151.
+            . Siglo XXI Editores.
           </p>
         </div>
 
@@ -62,39 +61,29 @@ export default function Bibliografia() {
             Lorandi, A. M. (1988).
             <em>
               {" "}
-              La resistencia y rebeliones de los diaguito-calchaquíes en los
-              siglos XVI y XVII
+Los Diaguitas y el Tawantinsuyu: Una hipótesis de conflicto.
+
             </em>
-            . Cuadernos de Historia, 8, 99-121.
+            BAR International Series, 442, 235-259.
           </p>
         </div>
 
         <div className="biblio-item">
           <p>
-            Mandrini, R. (2013).
-            <em> La Argentina aborigen. De los primeros pobladores a 1910</em>.
-            Siglo XXI Editores.
+            Scattolin, M. C., Bugliani, M. F., Izeta, A. D., Lazzari, M., Pereyra Domingorena, L. y Cortés, L. I. (2023)
+            <em> . Habitaciones, fogones y vasijas: Arqueología de la vida cotidiana en el Pucará de Tolombón (Salta, Argentina)</em>.
+            . Revista de Arqueología Sudamericana, 19(2), 45-68.
           </p>
         </div>
 
         <div className="biblio-item">
           <p>
-            Mandrini, R. (2008).
-            <em> Los pueblos originarios de la Argentina</em>. Sudamericana.
+Troncoso, C. (2023). 
+            <em> Promoción turística, imágenes oficiales y la construcción de la alteridad en la provincia de Salta</em>. Editorial de la Universidad Nacional de Salta.
           </p>
         </div>
 
-        <div className="biblio-item">
-          <p>
-            Williams, V. I. (2019).
-            <em>
-              {" "}
-              Paisajes, poblaciones y organización social en los Valles
-              Calchaquíes
-            </em>
-            . Universidad de Buenos Aires.
-          </p>
-        </div>
+        
       </div>
     </section>
   );

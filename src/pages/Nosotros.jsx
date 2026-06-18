@@ -5,22 +5,22 @@ export default function Nosotros() {
   {
     texto:
       "Una experiencia diferente que permite comprender la historia regional de forma dinámica y atractiva.",
-    autor: "Persona 1",
+    autor: "Agustina",
   },
   {
     texto:
       "La combinación entre patrimonio, gastronomía y tecnología genera una propuesta muy innovadora.",
-    autor: "Persona 2",
+    autor: "Pamela",
   },
   {
     texto:
       "Una excelente iniciativa para acercar la cultura local a las nuevas generaciones.",
-    autor: "Persona 3",
+    autor: "Liz Gimena",
   },
   {
     texto:
       "Tolombón Inmersivo demuestra el potencial del turismo cultural apoyado en herramientas digitales.",
-    autor: "Persona 4",
+    autor: "Mariela Soledad",
   },
 ];
 

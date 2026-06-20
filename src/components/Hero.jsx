@@ -21,7 +21,17 @@ export default function Hero() {
             📷 Abrir Cámara AR
           </button>
 
-          <button className="btn-secondary">Conocer el Proyecto</button>
+          <button
+            className="btn-secondary"
+            onClick={() =>
+              window.open(
+                "https://drive.google.com/file/d/13og1xSd361lAuzfNvdB32UweS-gp-npt/view",
+                "_blank",
+              )
+            }
+          >
+            Conocer el Proyecto
+          </button>
         </div>
       </div>
     </main>

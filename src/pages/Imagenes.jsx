@@ -1,9 +1,10 @@
+import Patrimonio from "../components/Patrimonio";
+
 export default function Imagenes() {
   return (
     <section className="section">
-      <h2 className="section-title">
-        Historia
-      </h2>
+      <Patrimonio />
+
       <h3 className="section-text">
         Ana MARIA Lorandi, Arqueóloga, investigadora del CONICET y docente de la Universidad
       </h3>

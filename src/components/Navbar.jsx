@@ -22,7 +22,7 @@ export default function Navbar() {
       </NavLink>
 
       <NavLink to="/imagenes">
-        Imágenes
+        Historia
       </NavLink>
     </nav>
   );

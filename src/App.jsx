@@ -4,6 +4,7 @@ import Bibliografia from "./pages/Bibliografia";
 import Footer from "./components/Footer";
 import Gastronomia from "./pages/Gastronomia";
 import Header from "./components/Header";
+import Historia from "./pages/Historia";
 import Imagenes from "./pages/Imagenes";
 import Inicio from "./pages/Inicio";
 import Navbar from "./components/Navbar";
@@ -24,6 +25,7 @@ function App() {
     <Route path="/nosotros" element={<Nosotros />} />
     <Route path="/bibliografia" element={<Bibliografia />} />
     <Route path="/imagenes" element={<Imagenes />} />
+    <Route path="/historia" element={<Historia />} />
   </Routes>
 
   <Footer />

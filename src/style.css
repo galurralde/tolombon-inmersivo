@@ -1153,3 +1153,97 @@ SLIDER TESTIMONIOS
 .gastronomia-intro{
   margin-bottom:50px;
 }
+/* ==========================
+DIVISOR DIAGUITA
+========================== */
+
+.diaguita-divider{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:20px;
+
+  margin:60px auto;
+
+  width:100%;
+}
+
+.diaguita-divider .linea{
+  flex:1;
+  max-width:220px;
+  height:2px;
+
+  background:var(--color-amarillo);
+}
+
+.simbolo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.cuadrado{
+  width:18px;
+  height:18px;
+
+  border:2px solid var(--color-amarillo);
+
+  position:relative;
+}
+
+.cuadrado::before{
+  content:"";
+
+  position:absolute;
+
+  top:50%;
+  left:50%;
+
+  width:16px;
+  height:2px;
+
+  background:var(--color-amarillo);
+
+  transform:
+    translate(-50%,-50%)
+    rotate(45deg);
+}
+
+.cuadrado::after{
+  content:"";
+
+  position:absolute;
+
+  top:50%;
+  left:50%;
+
+  width:16px;
+  height:2px;
+
+  background:var(--color-amarillo);
+
+  transform:
+    translate(-50%,-50%)
+    rotate(-45deg);
+}
+
+.rombo{
+  width:16px;
+  height:16px;
+
+  background:var(--color-amarillo);
+
+  transform:rotate(45deg);
+}
+
+@media(max-width:768px){
+
+  .diaguita-divider{
+    gap:10px;
+  }
+
+  .diaguita-divider .linea{
+    max-width:100px;
+  }
+}

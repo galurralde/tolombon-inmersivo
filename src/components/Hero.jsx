@@ -17,7 +17,10 @@ export default function Hero() {
         </p>
 
         <div className="hero-buttons">
-          <button onClick={() => window.open("/ar/index.html", "_blank")}>
+          <button 
+            onClick={() => 
+              window.open(
+                "/ar/index.html", "_blank")}>
             📷 Abrir Cámara AR
           </button>
 

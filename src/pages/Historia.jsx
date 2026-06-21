@@ -6,18 +6,25 @@ export default function Historia() {
     <section className="section">
       <Patrimonio />
 
-      <h3 className="section-text">
-        Ana MARIA Lorandi, Arqueóloga, investigadora del CONICET y docente de la
-        Universidad
-      </h3>
+      <div className="autor-historia">
+        <img src="/img/autor/Lorandi.jpeg" alt="Ana María Lorandi" />
 
-      <p className="section-text">
-        "...el éxito de la resistencia activa en el valle Calchaquí consistió
-        justamente en que fue un pueblo que entendió que con estos nuevos
-        invasores la pérdida del poder político arrastraba también la capacidad
-        de autogestión en todos los planos de la vida comunitaria e individual."
-        (Lorandi, 1988, p. 109) (p. 11).
-      </p>
+        <div>
+          <h3>Ana María Lorandi</h3>
+
+          <span>
+            Arqueóloga, investigadora del CONICET y docente universitaria
+          </span>
+
+          <p>
+            "...el éxito de la resistencia activa en el valle Calchaquí
+            consistió justamente en que fue un pueblo que entendió que con estos
+            nuevos invasores la pérdida del poder político arrastraba también la
+            capacidad de autogestión en todos los planos de la vida comunitaria
+            e individual." (Lorandi, 1988, p. 109).
+          </p>
+        </div>
+      </div>
 
       <DiaguitaDivider />
       <h3 className="section-text">

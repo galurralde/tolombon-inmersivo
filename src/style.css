@@ -1374,3 +1374,156 @@ AUTORES HISTORIA
   }
 
 }
+/* ==========================
+GALERÍA
+========================== */
+
+.galeria-grid{
+
+  max-width:1200px;
+
+  margin:50px auto;
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(320px, 1fr));
+
+  gap:30px;
+}
+
+.galeria-card{
+
+  position:relative;
+
+  overflow:hidden;
+
+  border-radius:20px;
+
+  cursor:pointer;
+
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+  transition:.3s;
+}
+
+.galeria-card:hover{
+
+  transform:translateY(-8px);
+}
+
+.galeria-card img{
+
+  width:100%;
+
+  height:320px;
+
+  object-fit:cover;
+
+  display:block;
+}
+
+.galeria-overlay{
+
+  position:absolute;
+
+  bottom:0;
+
+  width:100%;
+
+  padding:20px;
+
+  color:white;
+
+  background:
+    linear-gradient(
+      transparent,
+      rgba(0,0,0,.75)
+    );
+}
+
+.galeria-overlay span{
+
+  font-weight:700;
+
+  font-size:1.1rem;
+}
+
+/* ==========================
+MODAL
+========================== */
+
+.modal-galeria{
+
+  position:fixed;
+
+  inset:0;
+
+  background:rgba(0,0,0,.85);
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  z-index:9999;
+
+  padding:20px;
+}
+
+.modal-contenido{
+
+  position:relative;
+
+  max-width:1000px;
+
+  width:100%;
+
+  text-align:center;
+}
+
+.modal-contenido img{
+
+  width:100%;
+
+  max-height:80vh;
+
+  object-fit:contain;
+
+  border-radius:20px;
+}
+
+.modal-contenido h3{
+
+  color:white;
+
+  margin-top:15px;
+
+  font-family:var(--font-title);
+}
+
+.cerrar-modal{
+
+  position:absolute;
+
+  top:-10px;
+
+  right:-10px;
+
+  width:45px;
+
+  height:45px;
+
+  border:none;
+
+  border-radius:50%;
+
+  background:var(--color-footer);
+
+  color:white;
+
+  font-size:1.2rem;
+
+  cursor:pointer;
+}

@@ -33,7 +33,7 @@ export default function Gastronomia() {
   const imagenesTour = [
     "/img/folleto/folleto1.jpeg",
     "/img/folleto/folleto2.jpeg",
-    "/img/folleto/mapaTolombon.jpg",
+    "/img/folleto/mapaTolombon.jpeg",
   ];
 
   return (

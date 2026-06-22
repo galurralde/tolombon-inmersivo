@@ -41,7 +41,7 @@ export default function Gastronomia() {
       <div className="tour-tolombon">
         <div>
           <img
-            src="public\img\folleto\recepcionTolombon.png"
+            src="/img/folleto/recepcionTolombon.png"
             alt="Recepcion Tolombón"
             className="tour-img"
           />

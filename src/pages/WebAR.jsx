@@ -178,7 +178,7 @@ export default function WebAR() {
 
       </div>
 
-      <DiaguitaDivider />
+      
 
     </section>
   );

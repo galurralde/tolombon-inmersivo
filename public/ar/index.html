@@ -1,66 +1,101 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Tolombón Inmersivo AR</title>
+<title>Tolombón Inmersivo AR</title>
 
-  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-  <style>
-    body{
-      margin:0;
-      overflow:hidden;
-    }
+<style>
+body{
+  margin:0;
+  overflow:hidden;
+  font-family:Arial, sans-serif;
+}
 
-    .mensaje{
-      position:fixed;
-      top:20px;
-      width:100%;
-      text-align:center;
-      color:white;
-      font-size:22px;
-      font-family:Arial, sans-serif;
-      text-shadow:0 0 10px black;
-      z-index:999;
-    }
-  </style>
+.mensaje{
+  position:fixed;
+  top:20px;
+  width:100%;
+  text-align:center;
+  color:white;
+  font-size:20px;
+  text-shadow:0 0 10px black;
+  z-index:999;
+}
+</style>
+
 </head>
-
 <body>
 
 <div class="mensaje">
-  Apuntá la cámara al marcador Guerrero
+  Apuntá la cámara al marcador correspondiente
 </div>
 
 <a-scene
-  mindar-image="imageTargetSrc: /ar/targets.mind; autoStart: true;"
+  mindar-image="imageTargetSrc: ./targets.mind; autoStart: true;"
   color-space="sRGB"
   embedded
-  renderer="physicallyCorrectLights: true; colorManagement: true"
-  vr-mode-ui="enabled: false"
-  device-orientation-permission-ui="enabled: false"
+  renderer="physicallyCorrectLights: true; colorManagement: true;"
+  vr-mode-ui="enabled:false"
+  device-orientation-permission-ui="enabled:false"
 >
 
-  <a-assets>
+<a-assets>
 
-    <a-asset-item
-      id="personaje"
-      src="/ar/personaje.glb">
-    </a-asset-item>
+  <!-- MODELOS -->
 
-    <audio
-      id="narracion"
-      src="/ar/personaje.mp3">
-    </audio>
+  <a-asset-item
+    id="modelo1"
+    src="./parada1/modelo1.glb">
+  </a-asset-item>
 
-  </a-assets>
+  <a-asset-item
+    id="modelo2"
+    src="./parada2/modelo2.glb">
+  </a-asset-item>
 
-  <a-light
+  <a-asset-item
+    id="modelo3"
+    src="./parada3/modelo3.glb">
+  </a-asset-item>
+
+  <a-asset-item
+    id="modelo4"
+    src="./parada4/modelo4.glb">
+  </a-asset-item>
+
+  <!-- AUDIOS -->
+
+  <audio
+    id="audio1"
+    src="./parada1/audio1.mp3">
+  </audio>
+
+  <audio
+    id="audio2"
+    src="./parada2/audio2.mp3">
+  </audio>
+
+  <audio
+    id="audio3"
+    src="./parada3/audio3.mp3">
+  </audio>
+
+  <audio
+    id="audio4"
+    src="./parada4/audio4.mp3">
+  </audio>
+
+</a-assets>
+
+<!-- LUCES -->
+
+<a-light
   type="ambient"
-  color="#ffffff"
   intensity="1.5">
 </a-light>
 
@@ -70,39 +105,110 @@
   intensity="2">
 </a-light>
 
-  <a-camera
+<a-camera
+  position="0 0 0"
+  look-controls="enabled:false">
+</a-camera>
+
+<!-- targetIndex 0 = marcador4 -->
+
+<a-entity mindar-image-target="targetIndex: 0">
+
+  <a-gltf-model
+    src="#modelo4"
     position="0 0 0"
-    look-controls="enabled: false">
-  </a-camera>
+    rotation="0 180 0"
+    scale="0.15 0.15 0.15">
+  </a-gltf-model>
 
-  <a-entity mindar-image-target="targetIndex: 0">
+</a-entity>
 
-    <a-gltf-model
-      src="#personaje"
-      position="0 0 0"
-      rotation="0 180 0"
-      scale="0.02 0.02 0.02">
-    </a-gltf-model>
+<!-- targetIndex 1 = marcador3 -->
 
-  </a-entity>
+<a-entity mindar-image-target="targetIndex: 1">
+
+  <a-gltf-model
+    src="#modelo3"
+    position="0 0 0"
+    rotation="0 180 0"
+    scale="0.15 0.15 0.15">
+  </a-gltf-model>
+
+</a-entity>
+
+<!-- targetIndex 2 = marcador2 -->
+
+<a-entity mindar-image-target="targetIndex: 2">
+
+  <a-gltf-model
+    src="#modelo2"
+    position="0 0 0"
+    rotation="0 180 0"
+    scale="0.15 0.15 0.15">
+  </a-gltf-model>
+
+</a-entity>
+
+<!-- targetIndex 3 = marcador1 -->
+
+<a-entity mindar-image-target="targetIndex: 3">
+
+  <a-gltf-model
+    src="#modelo1"
+    position="0 0 0"
+    rotation="0 180 0"
+    scale="0.15 0.15 0.15">
+  </a-gltf-model>
+
+</a-entity>
 
 </a-scene>
 
 <script>
+
+const reproducirAudio = (id) => {
+
+  [
+    "audio1",
+    "audio2",
+    "audio3",
+    "audio4"
+  ].forEach(audioId => {
+
+    const a = document.getElementById(audioId);
+
+    a.pause();
+    a.currentTime = 0;
+  });
+
+  const audio = document.getElementById(id);
+
+  audio.play().catch(() => {});
+};
+
 document.addEventListener("DOMContentLoaded", () => {
 
-  const target =
-    document.querySelector('[mindar-image-target]');
+  const targets =
+    document.querySelectorAll("[mindar-image-target]");
 
-  const audio =
-    document.getElementById("narracion");
+  targets[0].addEventListener("targetFound", () => {
+    reproducirAudio("audio4");
+  });
 
-  target.addEventListener("targetFound", () => {
-    audio.currentTime = 0;
-    audio.play().catch(() => {});
+  targets[1].addEventListener("targetFound", () => {
+    reproducirAudio("audio3");
+  });
+
+  targets[2].addEventListener("targetFound", () => {
+    reproducirAudio("audio2");
+  });
+
+  targets[3].addEventListener("targetFound", () => {
+    reproducirAudio("audio1");
   });
 
 });
+
 </script>
 
 </body>

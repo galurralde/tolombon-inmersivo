@@ -1,3 +1,5 @@
+import DiaguitaDivider from "../components/DiaguitaDivider";
+
 export default function WebAR() {
   return (
     <section className="section">
@@ -7,41 +9,176 @@ export default function WebAR() {
       </h2>
 
       <p className="section-text">
-        Escaneá el marcador para visualizar el patrimonio de Tolombón
-        mediante realidad aumentada.
+        Escaneá los marcadores para visualizar contenidos patrimoniales
+        mediante Realidad Aumentada.
       </p>
 
-      <div className="webar-container">
+      <DiaguitaDivider />
 
-        <h3>Marcador AR</h3>
+      {/* PARADA 1 */}
+
+      <div className="ar-card">
+
+        <h3>Parada 1: El Umbral del Territorio Autónomo</h3>
+
+        <p>
+          Comprender la importancia estratégica del Valle de Yocavil,
+          los sistemas agrícolas y las causas del conflicto entre las
+          comunidades diaguita-calchaquíes y el sistema colonial.
+        </p>
+
+        <h4>Marcador AR</h4>
 
         <img
-          src="/ar/guerrero.png"
-          alt="Marcador Tolombón"
-          className="marcador-img"
+          src="/ar/parada1/marcador1.png"
+          alt="Marcador Parada 1"
+          className="ar-marker"
         />
 
-        <h3>Modelo 3D</h3>
+        <h4>Modelo 3D</h4>
 
         <model-viewer
-          src="/ar/jarron.glb"
+          src="/ar/parada1/modelo1.glb"
           camera-controls
           auto-rotate
-          shadow-intensity="1"
-          style={{
-            width: "100%",
-            height: "500px"
-          }}
-        >
-        </model-viewer>
+          className="ar-model"
+        />
 
-        <h3>Audio Narrativo</h3>
+        <h4>Audio Narrativo</h4>
 
         <audio controls>
-          <source src="/ar/personaje.mp3" type="audio/mpeg" />
+          <source
+            src="/ar/parada1/audio1.mp3"
+            type="audio/mpeg"
+          />
         </audio>
 
       </div>
+
+      <DiaguitaDivider />
+
+      {/* PARADA 2 */}
+
+      <div className="ar-card">
+
+        <h3>Parada 2: La Vida Cotidiana en Tolombón</h3>
+
+        <p>
+          Organización familiar y comunitaria, producción cerámica,
+          almacenamiento de alimentos y tecnología agrícola local.
+        </p>
+
+        <h4>Marcador AR</h4>
+
+        <img
+          src="/ar/parada2/marcador2.png"
+          alt="Marcador Parada 2"
+          className="ar-marker"
+        />
+
+        <h4>Modelo 3D</h4>
+
+        <model-viewer
+          src="/ar/parada2/modelo2.glb"
+          camera-controls
+          auto-rotate
+          className="ar-model"
+        />
+
+        <h4>Audio Narrativo</h4>
+
+        <audio controls>
+          <source
+            src="/ar/parada2/audio2.mp3"
+            type="audio/mpeg"
+          />
+        </audio>
+
+      </div>
+
+      <DiaguitaDivider />
+
+      {/* PARADA 3 */}
+
+      <div className="ar-card">
+
+        <h3>Parada 3: El Pucará y la Resistencia Calchaquí</h3>
+
+        <p>
+          Liderazgo de Pivanti, estrategias militares y resistencia
+          indígena frente al avance colonial.
+        </p>
+
+        <h4>Marcador AR</h4>
+
+        <img
+          src="/ar/parada3/marcador3.png"
+          alt="Marcador Parada 3"
+          className="ar-marker"
+        />
+
+        <h4>Modelo 3D</h4>
+
+        <model-viewer
+          src="/ar/parada3/modelo3.glb"
+          camera-controls
+          auto-rotate
+          className="ar-model"
+        />
+
+        <h4>Audio Narrativo</h4>
+
+        <audio controls>
+          <source
+            src="/ar/parada3/audio3.MP3"
+            type="audio/mpeg"
+          />
+        </audio>
+
+      </div>
+
+      <DiaguitaDivider />
+
+      {/* PARADA 4 */}
+
+      <div className="ar-card">
+
+        <h3>Parada 4: Memoria, Identidad y Territorio Vivo</h3>
+
+        <p>
+          Relación entre patrimonio arqueológico, comunidad indígena
+          de Tolombón e identidad territorial contemporánea.
+        </p>
+
+        <h4>Marcador AR</h4>
+
+        <img
+          src="/ar/parada4/marcador4.png"
+          alt="Marcador Parada 4"
+          className="ar-marker"
+        />
+
+        <h4>Modelo 3D</h4>
+
+        <model-viewer
+          src="/ar/parada4/modelo4.glb"
+          camera-controls
+          auto-rotate
+          className="ar-model"
+        />
+
+        <h4>Audio Narrativo</h4>
+
+        <audio controls>
+          <source
+            src="/ar/parada4/audio4.MP3"
+            type="audio/mpeg"
+          />
+        </audio>
+
+      </div>
+
+      <DiaguitaDivider />
 
     </section>
   );

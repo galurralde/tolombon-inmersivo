@@ -1937,3 +1937,40 @@ MODAL
 .proyecto-btn:hover {
   opacity: 0.9;
 }
+.ar-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  max-width: 900px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 15px rgba(0,0,0,.08);
+}
+
+.ar-card h3 {
+  color: #7a4a20;
+  margin-bottom: 1rem;
+}
+
+.ar-card h4 {
+  margin-top: 1.5rem;
+  color: #7a4a20;
+}
+
+.ar-marker {
+  width: 220px;
+  max-width: 100%;
+  display: block;
+  margin: 1rem auto;
+}
+
+.ar-model {
+  width: 100%;
+  height: 350px;
+  background: #f7f3ee;
+  border-radius: 12px;
+}
+
+.ar-card audio {
+  width: 100%;
+  margin-top: 1rem;
+}

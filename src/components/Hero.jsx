@@ -1,3 +1,5 @@
+import DiaguitaDivider from './DiaguitaDivider';
+import diaguitaDivider from "../components/DiaguitaDivider";
 import { useState } from "react";
 
 export default function Hero() {
@@ -62,49 +64,47 @@ export default function Hero() {
               Las Ruinas de Tolombón no son solo vestigios arqueológicos: son
               territorios vivos que cuentan la resistencia de las comunidades
               Diaguita-Calchaquí y su memoria frente a la conquista.
-            </p>
-
-            <p>
               Tolombón Inmersivo te invita a recorrer el Valle Calchaquí desde
               una mirada crítica y participativa, integrando historia,
               tecnología y comunidad en un producto turístico único.
+<DiaguitaDivider />
             </p>
+
 
             <h4>¿A quién está dirigido?</h4>
 
-            <ul>
-              <li>
+            <p>
+              <p>
                 Estudiantes universitarios que buscan experiencias educativas y
                 rigurosas.
-              </li>
+              </p>
 
-              <li>
+              <p>
                 Turistas culturales interesados en propuestas auténticas y con
                 sentido histórico.
-              </li>
+              </p>
 
-              <li>
+              <p>
                 Interesados en la historia regional que desean profundizar en
                 las memorias del territorio.
-              </li>
+              </p>
 
-              <li>
+              <p>
                 Visitantes interpretativos que prefieren alternativas éticas y
                 sostenibles, lejos del turismo masivo.
-              </li>
-            </ul>
+              </p>
+              <DiaguitaDivider />
+            </p>
+
 
             <h4>Lo que vas a encontrar</h4>
 
-            <ul>
-              <li>Recorridos inmersivos con narrativas críticas.</li>
-              <li>Tecnología aplicada a la interpretación patrimonial.</li>
-              <li>
-                Participación comunitaria que da voz a los protagonistas
-                locales.
-              </li>
-              <li>Una experiencia cultural transformadora y sostenible.</li>
-            </ul>
+            <p>
+              Recorridos inmersivos con narrativas críticas. Tecnología aplicada
+              a la interpretación patrimonial. Participación comunitaria que da
+              voz a los protagonistas locales. Una experiencia cultural
+              transformadora y sostenible.
+            </p>
 
             <div className="proyecto-cta">
               👉 Explora Tolombón Inmersivo y sé parte de una nueva forma de

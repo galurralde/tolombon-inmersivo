@@ -112,7 +112,9 @@ export default function WebAR() {
         <p>
           Las piedras tacitas (conocidas tambien como morteros comunitarios) son
           un elemento material frecuente en muchas comunidades. El uso de estos
-          soportes para el procesamientos de vegetales (principalmente molienda) habria sufrido un incremento asociado a la intensificacion de las practicas de recoleccion y el uso de recursos naturales.
+          soportes para el procesamientos de vegetales (principalmente molienda)
+          habria sufrido un incremento asociado a la intensificacion de las
+          practicas de recoleccion y el uso de recursos naturales.
         </p>
 
         <model-viewer

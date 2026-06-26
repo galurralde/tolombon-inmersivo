@@ -168,50 +168,81 @@ scale="0.01 0.01 0.01">
 
 <script>
 
-const reproducirAudio = (id) => {
+function detenerTodos(){
 
-  [
-    "audio1",
-    "audio2",
-    "audio3",
-    "audio4"
-  ].forEach(audioId => {
+  ["audio1","audio2","audio3","audio4"].forEach(id=>{
 
-    const a = document.getElementById(audioId);
+    const a=document.getElementById(id);
 
-    a.pause();
-    a.currentTime = 0;
+    if(a){
+      a.pause();
+      a.currentTime=0;
+    }
+
   });
 
-  const audio = document.getElementById(id);
+}
 
-  audio.play().catch(() => {});
-};
+function reproducir(id){
 
-document.addEventListener("DOMContentLoaded", () => {
+  detenerTodos();
 
-  const targets =
-    document.querySelectorAll("[mindar-image-target]");
+  const audio=document.getElementById(id);
 
-  targets[0].addEventListener("targetFound", () => {
-    reproducirAudio("audio4");
-  });
+  if(audio){
 
-  targets[1].addEventListener("targetFound", () => {
-    reproducirAudio("audio3");
-  });
+    audio.play().catch((e)=>{
+      console.log("Error reproduciendo",id,e);
+    });
 
-  targets[2].addEventListener("targetFound", () => {
-    reproducirAudio("audio2");
-  });
+  }
 
-  targets[3].addEventListener("targetFound", () => {
-    reproducirAudio("audio1");
+}
+
+window.addEventListener("load",()=>{
+
+  const targets=document.querySelectorAll("[mindar-image-target]");
+
+  console.log("Targets:",targets.length);
+
+  targets.forEach((target,index)=>{
+
+    target.addEventListener("targetFound",()=>{
+
+      console.log("Encontró marcador",index);
+
+      switch(index){
+
+        case 0:
+          reproducir("audio4");
+        break;
+
+        case 1:
+          reproducir("audio3");
+        break;
+
+        case 2:
+          reproducir("audio2");
+        break;
+
+        case 3:
+          reproducir("audio1");
+        break;
+
+      }
+
+    });
+
+    target.addEventListener("targetLost",()=>{
+
+      detenerTodos();
+
+    });
+
   });
 
 });
 
-</>
 </script>
 
 </body>

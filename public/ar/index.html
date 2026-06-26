@@ -8,7 +8,7 @@
 
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.2.0/dist/aframe-extras.min.js"></script>
+
 
 <style>
 body{
@@ -168,77 +168,51 @@ scale="0.01 0.01 0.01">
 
 <script>
 
-function detenerTodos(){
+const reproducirAudio = (id) => {
 
-  ["audio1","audio2","audio3","audio4"].forEach(id=>{
+  [
+    "audio1",
+    "audio2",
+    "audio3",
+    "audio4"
+  ].forEach(audioId => {
 
-    const a=document.getElementById(id);
+    const a = document.getElementById(audioId);
 
     if(a){
       a.pause();
-      a.currentTime=0;
+      a.currentTime = 0;
     }
 
   });
 
-}
-
-function reproducir(id){
-
-  detenerTodos();
-
-  const audio=document.getElementById(id);
+  const audio = document.getElementById(id);
 
   if(audio){
-
-    audio.play().catch((e)=>{
-      console.log("Error reproduciendo",id,e);
-    });
-
+    audio.play().catch(() => {});
   }
 
-}
+};
 
-window.addEventListener("load",()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
-  const targets=document.querySelectorAll("[mindar-image-target]");
+  const targets =
+    document.querySelectorAll("[mindar-image-target]");
 
-  console.log("Targets:",targets.length);
+  targets[0].addEventListener("targetFound", () => {
+    reproducirAudio("audio4");
+  });
 
-  targets.forEach((target,index)=>{
+  targets[1].addEventListener("targetFound", () => {
+    reproducirAudio("audio3");
+  });
 
-    target.addEventListener("targetFound",()=>{
+  targets[2].addEventListener("targetFound", () => {
+    reproducirAudio("audio2");
+  });
 
-      console.log("Encontró marcador",index);
-
-      switch(index){
-
-        case 0:
-          reproducir("audio4");
-        break;
-
-        case 1:
-          reproducir("audio3");
-        break;
-
-        case 2:
-          reproducir("audio2");
-        break;
-
-        case 3:
-          reproducir("audio1");
-        break;
-
-      }
-
-    });
-
-    target.addEventListener("targetLost",()=>{
-
-      detenerTodos();
-
-    });
-
+  targets[3].addEventListener("targetFound", () => {
+    reproducirAudio("audio1");
   });
 
 });

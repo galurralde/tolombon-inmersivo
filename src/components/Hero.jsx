@@ -1,5 +1,4 @@
-import DiaguitaDivider from './DiaguitaDivider';
-import diaguitaDivider from "../components/DiaguitaDivider";
+import DiaguitaDivider from "./DiaguitaDivider";
 import { useState } from "react";
 
 export default function Hero() {
@@ -45,12 +44,7 @@ export default function Hero() {
             className="proyecto-modal-content"
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              className="proyecto-close"
-              onClick={() => setMostrarProyecto(false)}
-            >
-              ✕
-            </button>
+
 
             <h2>Tolombón Inmersivo</h2>
 
@@ -63,13 +57,12 @@ export default function Hero() {
             <p>
               Las Ruinas de Tolombón no son solo vestigios arqueológicos: son
               territorios vivos que cuentan la resistencia de las comunidades
-              Diaguita-Calchaquí y su memoria frente a la conquista.
-              Tolombón Inmersivo te invita a recorrer el Valle Calchaquí desde
-              una mirada crítica y participativa, integrando historia,
-              tecnología y comunidad en un producto turístico único.
-<DiaguitaDivider />
+              Diaguita-Calchaquí y su memoria frente a la conquista. Tolombón
+              Inmersivo te invita a recorrer el Valle de Yocavil desde una mirada
+              crítica y participativa, integrando historia, tecnología y
+              comunidad en un producto turístico único.
+              <DiaguitaDivider />
             </p>
-
 
             <h4>¿A quién está dirigido?</h4>
 
@@ -95,7 +88,6 @@ export default function Hero() {
               </p>
               <DiaguitaDivider />
             </p>
-
 
             <h4>Lo que vas a encontrar</h4>
 

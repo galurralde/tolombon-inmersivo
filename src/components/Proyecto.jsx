@@ -17,7 +17,7 @@ export default function Proyecto() {
             Producto turístico mixto de circuito interpretativo
             histórico-arqueológico con tecnología inmersiva. El recorrido
             principal se desarrollará en el Pucará de Tolombón y espacios
-            complementarios cercanos dentro del valle Calchaquí. Mediante
+            complementarios cercanos dentro del valle de Yocavil. Mediante
             códigos QR y realidad aumentada, los visitantes accederán a
             reconstrucciones digitales de las viviendas subcirculares y terrazas
             agrícolas, estructuras defensivas,pucarás, rituales y episodios de

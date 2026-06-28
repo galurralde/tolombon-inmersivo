@@ -117,7 +117,6 @@ body{
 
 <a-gltf-model
 src="#modelo4"
-animation-mixer
 position="0 0 0"
 rotation="0 0 0"
 scale="0.01 0.01 0.01">
@@ -168,54 +167,37 @@ scale="0.01 0.01 0.01">
 
 <script>
 
-const reproducirAudio = (id) => {
+function reproducir(id){
 
-  [
-    "audio1",
-    "audio2",
-    "audio3",
-    "audio4"
-  ].forEach(audioId => {
+  ["audio1","audio2","audio3","audio4"].forEach(a=>{
 
-    const a = document.getElementById(audioId);
+    const audio=document.getElementById(a);
 
-    if(a){
-      a.pause();
-      a.currentTime = 0;
+    if(audio){
+      audio.pause();
+      audio.currentTime=0;
     }
 
   });
 
-  const audio = document.getElementById(id);
+  const audio=document.getElementById(id);
 
   if(audio){
-    audio.play().catch(() => {});
+    audio.play().catch(()=>{});
   }
 
-};
+}
 
-document.addEventListener("DOMContentLoaded", () => {
+window.onload=()=>{
 
-  const targets =
-    document.querySelectorAll("[mindar-image-target]");
+const entidades=document.querySelectorAll("[mindar-image-target]");
 
-  targets[0].addEventListener("targetFound", () => {
-    reproducirAudio("audio4");
-  });
+entidades[0].addEventListener("targetFound",()=>reproducir("audio4"));
+entidades[1].addEventListener("targetFound",()=>reproducir("audio3"));
+entidades[2].addEventListener("targetFound",()=>reproducir("audio2"));
+entidades[3].addEventListener("targetFound",()=>reproducir("audio1"));
 
-  targets[1].addEventListener("targetFound", () => {
-    reproducirAudio("audio3");
-  });
-
-  targets[2].addEventListener("targetFound", () => {
-    reproducirAudio("audio2");
-  });
-
-  targets[3].addEventListener("targetFound", () => {
-    reproducirAudio("audio1");
-  });
-
-});
+}
 
 </script>
 

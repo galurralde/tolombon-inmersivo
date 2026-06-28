@@ -40,6 +40,27 @@ export default function Bibliografia() {
           Material audiovisual utilizado con fines educativos, patrimoniales y
           de divulgación histórica.
         </p>
+        <p>
+          <p>
+            <strong>BIBLIOGRAFÍA VIDIOTECA: </strong>
+          </p>
+          <em>- Verónica Williams. (2009).</em>{" "}
+          <p>
+            HOSPITALIDAD E INTERCAMBIO EN LOS VALLES MESOTERMALES DEL NOROESTE
+            ARGENTINO. Argentina: ISSN.
+          </p>
+          <em>- Veronika Isabel Williams. (2013).</em>
+          <p>
+            AL BORDE DEL IMPERIO. PAISAJES SOCIALES, MATERIALIDAD Y MEMORIA EN
+            ÁREAS PERIFÉRICAS DEL NOROESTE ARGENTINO. Buenos Aires: Sociedad
+            Argentina de Antropología.
+          </p>{" "}
+          <em>- Veronika Isabel Williams. (s.f.).</em>{" "}
+          <p>
+            EL IMPERIO INCA EN EL NOROESTE ARGENTINO. Buenos Aires: Sociedad
+            Argentina de Antropología.
+          </p>
+        </p>
       </div>
 
       <h3 className="subsection-title">Bibliografía Académica</h3>
@@ -49,8 +70,8 @@ export default function Bibliografia() {
             Fradkin, R. y Garavaglia, J. C. (2009).
             <em>
               {" "}
-               La Argentina colonial: El Río de la Plata entre los siglos XVI y XIX
-
+              La Argentina colonial: El Río de la Plata entre los siglos XVI y
+              XIX
             </em>
             . Siglo XXI Editores.
           </p>
@@ -61,8 +82,7 @@ export default function Bibliografia() {
             Lorandi, A. M. (1988).
             <em>
               {" "}
-Los Diaguitas y el Tawantinsuyu: Una hipótesis de conflicto.
-
+              Los Diaguitas y el Tawantinsuyu: Una hipótesis de conflicto.
             </em>
             BAR International Series, 442, 235-259.
           </p>
@@ -70,20 +90,28 @@ Los Diaguitas y el Tawantinsuyu: Una hipótesis de conflicto.
 
         <div className="biblio-item">
           <p>
-            Scattolin, M. C., Bugliani, M. F., Izeta, A. D., Lazzari, M., Pereyra Domingorena, L. y Cortés, L. I. (2023)
-            <em> . Habitaciones, fogones y vasijas: Arqueología de la vida cotidiana en el Pucará de Tolombón (Salta, Argentina)</em>.
-            . Revista de Arqueología Sudamericana, 19(2), 45-68.
+            Scattolin, M. C., Bugliani, M. F., Izeta, A. D., Lazzari, M.,
+            Pereyra Domingorena, L. y Cortés, L. I. (2023)
+            <em>
+              {" "}
+              . Habitaciones, fogones y vasijas: Arqueología de la vida
+              cotidiana en el Pucará de Tolombón (Salta, Argentina)
+            </em>
+            . . Revista de Arqueología Sudamericana, 19(2), 45-68.
           </p>
         </div>
 
         <div className="biblio-item">
           <p>
-Troncoso, C. (2023). 
-            <em> Promoción turística, imágenes oficiales y la construcción de la alteridad en la provincia de Salta</em>. Editorial de la Universidad Nacional de Salta.
+            Troncoso, C. (2023).
+            <em>
+              {" "}
+              Promoción turística, imágenes oficiales y la construcción de la
+              alteridad en la provincia de Salta
+            </em>
+            . Editorial de la Universidad Nacional de Salta.
           </p>
         </div>
-
-        
       </div>
     </section>
   );

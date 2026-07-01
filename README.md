@@ -98,13 +98,13 @@ Inicio
 
 ✔ Despliegue web accesible desde cualquier navegador
 
+✔ Realidad aumentada
+
+✔ Audioguías patrimoniales
+
 ### 🚀 Futuras Mejoras
 
 ◻ Recorridos 360°
-
-◻ Realidad aumentada
-
-◻ Audioguías patrimoniales
 
 ◻ Mapa interactivo del sitio
 
@@ -122,8 +122,8 @@ La propuesta estética toma referencias de la iconografía diaguita-calchaquí y
 | -------------- | ---------------------------------- |
 | 🟫 Terracota   | Cerámica diaguita                  |
 | 🟨 Ocre        | Paisaje de montaña                 |
-| ⬛ Negro        | Motivos geométricos ancestrales    |
-| ⬜ Arena        | Piedra y arquitectura prehispánica |
+| ⬛ Negro       | Motivos geométricos ancestrales    |
+| ⬜ Arena       | Piedra y arquitectura prehispánica |
 | 🟩 Verde suave | Vegetación de los valles           |
 
 ### Motivo Inspirador
@@ -132,7 +132,7 @@ La propuesta estética toma referencias de la iconografía diaguita-calchaquí y
 ◇ ◈ ◇ ◈ ◇ ◈ ◇ ◈ ◇
 ```
 
-Representación simbólica basada en patrones geométricos presentes en la cerámica diaguita.
+Representación simbólica basada en patrones geométricos presentes en la cerámica diaguita. Archivos GLB en modo demo de paginas https://sketchfab.com/
 
 ---
 
@@ -146,6 +146,7 @@ Representación simbólica basada en patrones geométricos presentes en la cerá
 | CSS3       | Estilos               |
 | Vite       | Entorno de desarrollo |
 | Vercel     | Despliegue            |
+| AudiosVoces| https://elevenlabs.io/|
 
 ---
 

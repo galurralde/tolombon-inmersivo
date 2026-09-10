@@ -13,6 +13,9 @@
     <!-- MindAR -->
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
+  <!-- Model Viewer: visor 3D independiente de MindAR -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+
     <style>
       body {
         margin: 0;
@@ -61,13 +64,106 @@
 
         pointer-events: none;
       }
-    </style>
+    
+    /* ==========================================
+       VISOR 3D PERSISTENTE
+       Se muestra después de detectar Parada 1
+       y NO depende del tracking del marcador.
+    ========================================== */
+
+    .modelo-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9000;
+      pointer-events: none;
+    }
+
+    .modelo-overlay.activo {
+      display: flex;
+    }
+
+    .modelo-card {
+      position: relative;
+      width: min(92vw, 620px);
+      height: min(68vh, 620px);
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      overflow: hidden;
+      pointer-events: auto;
+    }
+
+    #modeloParada1 {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      --poster-color: transparent;
+    }
+
+    .cerrar-modelo {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 2;
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(54, 37, 19, 0.88);
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .ayuda-modelo {
+      position: absolute;
+      left: 50%;
+      bottom: 12px;
+      transform: translateX(-50%);
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+  </style>
   </head>
 
   <body>
     <div class="mensaje">Apuntá la cámara a uno de los marcadores</div>
 
     <div class="estado" id="estado">Buscando marcador...</div>
+
+    <!-- Visor 3D persistente: aparece luego del escaneo de Parada 1 -->
+    <div id="modeloOverlay" class="modelo-overlay">
+      <div class="modelo-card">
+        <button id="cerrarModelo" class="cerrar-modelo" type="button">
+          ✕ Cerrar modelo
+        </button>
+
+        <model-viewer
+          id="modeloParada1"
+          src="/ar/parada1/modelo1.glb"
+          alt="Modelo 3D interpretativo de la Parada 1"
+          camera-controls
+          auto-rotate
+          interaction-prompt="none"
+          shadow-intensity="1"
+          exposure="1.2"
+          loading="eager"
+          reveal="auto">
+        </model-viewer>
+
+        <div class="ayuda-modelo">
+          Arrastrá para girar · Pellizcá para acercar
+        </div>
+      </div>
+    </div>
 
     <!-- ========================= -->
     <!-- AUDIOS -->
@@ -122,35 +218,11 @@
       <!-- CÁMARA -->
       <!-- ========================= -->
 
-      <a-camera id="camera" position="0 0 0" look-controls="enabled: false">
-        <!--
-    VISOR PERSISTENTE DE PARADA 1
-
-    Al estar dentro de la cámara,
-    NO depende del marcador.
-  -->
-
-        <a-entity id="visorParada1" position="0 -0.25 -1.5" visible="false">
-          <!-- Cubo testigo -->
-          <a-box
-            id="cuboPersistente"
-            position="-0.45 0 0"
-            width="0.15"
-            height="0.15"
-            depth="0.15"
-            color="#A3732F"
-          ></a-box>
-
-          <!-- Modelo real -->
-          <a-gltf-model
-            id="modeloPersistente1"
-            src="/ar/parada1/modelo1.glb"
-            position="0 0 0"
-            rotation="0 180 0"
-            scale="0.02 0.02 0.02"
-          ></a-gltf-model>
-        </a-entity>
-      </a-camera>
+      <a-camera
+        id="camera"
+        position="0 0 0"
+        look-controls="enabled: false"
+      ></a-camera>
 
       <!-- ================================================= -->
       <!-- PARADA 1 -->
@@ -208,10 +280,10 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const estado = document.getElementById("estado");
+        const modeloOverlay = document.getElementById("modeloOverlay");
+        const modeloParada1 = document.getElementById("modeloParada1");
+        const cerrarModelo = document.getElementById("cerrarModelo");
 
-        // Visor 3D persistente de la Parada 1
-        const visorParada1 = document.getElementById("visorParada1");
-        const modeloPersistente1 = document.getElementById("modeloPersistente1");
 
         /* ============================================
          AUDIOS
@@ -319,16 +391,20 @@
         });
 
         /* ============================================
-         MODELO PERSISTENTE - PARADA 1
+         MODEL-VIEWER - PARADA 1
       ============================================ */
 
-        modeloPersistente1.addEventListener("model-loaded", () => {
-          console.log("✅ modelo1.glb persistente cargado correctamente");
+        modeloParada1.addEventListener("load", () => {
+          console.log("✅ modelo1.glb cargado en model-viewer");
         });
 
-        modeloPersistente1.addEventListener("model-error", (event) => {
-          console.error("❌ Error cargando modelo1.glb persistente", event);
+        modeloParada1.addEventListener("error", (event) => {
+          console.error("❌ Error cargando modelo1.glb en model-viewer", event);
           estado.textContent = "Parada 1 activa - error en modelo 3D";
+        });
+
+        cerrarModelo.addEventListener("click", () => {
+          modeloOverlay.classList.remove("activo");
         });
 
         /* ============================================
@@ -400,10 +476,10 @@
 
           estado.textContent = "Parada 1 detectada";
 
-          // El modelo queda fijo frente a la cámara y no depende del marcador.
-          visorParada1.setAttribute("visible", true);
+          // Mostrar el modelo 3D en una capa independiente del tracking.
+          modeloOverlay.classList.add("activo");
 
-          // Inicia audio1. Solo se detendrá al activar otra experiencia.
+          // El audio continúa aunque se pierda el marcador.
           reproducirAudio(audio1);
         });
 

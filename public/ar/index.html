@@ -403,8 +403,29 @@
           estado.textContent = "Parada 1 activa - error en modelo 3D";
         });
 
+        function ocultarGuiasEscaneo() {
+          const scanningUI = document.querySelector(".mindar-ui-scanning");
+
+          if (scanningUI) {
+            scanningUI.style.display = "none";
+          }
+        }
+
+        function mostrarGuiasEscaneo() {
+          const scanningUI = document.querySelector(".mindar-ui-scanning");
+
+          if (scanningUI) {
+            scanningUI.style.display = "";
+          }
+        }
+
         cerrarModelo.addEventListener("click", () => {
           modeloOverlay.classList.remove("activo");
+
+          // Al cerrar el modelo, vuelve el lector para poder escanear otra parada.
+          mostrarGuiasEscaneo();
+
+          estado.textContent = "Buscando marcador...";
         });
 
         /* ============================================
@@ -478,6 +499,9 @@
 
           // Mostrar el modelo 3D en una capa independiente del tracking.
           modeloOverlay.classList.add("activo");
+
+          // Ocultar las líneas/guías de escaneo mientras la experiencia está activa.
+          ocultarGuiasEscaneo();
 
           // El audio continúa aunque se pierda el marcador.
           reproducirAudio(audio1);

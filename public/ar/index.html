@@ -11,13 +11,17 @@
 
   <title>Tolombón Inmersivo AR</title>
 
+  <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 
+  <!-- MindAR -->
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
   <style>
     body {
       margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
     }
 
     .mensaje {
@@ -25,11 +29,11 @@
       top: 20px;
       left: 0;
       width: 100%;
+
       text-align: center;
 
       color: white;
-      font-family: Arial, sans-serif;
-      font-size: 18px;
+      font-size: 20px;
 
       text-shadow:
         0 0 5px black,
@@ -50,11 +54,12 @@
       background: rgba(0, 0, 0, 0.65);
       color: white;
 
-      padding: 10px 15px;
+      padding: 10px 16px;
+
       border-radius: 10px;
 
-      font-family: Arial, sans-serif;
       font-size: 14px;
+      text-align: center;
 
       z-index: 9999;
 
@@ -66,26 +71,51 @@
 <body>
 
   <div class="mensaje">
-    Apuntá la cámara al marcador Guerrero
+    Apuntá la cámara a uno de los marcadores
   </div>
 
   <div
     class="estado"
     id="estado"
   >
-    Iniciando cámara...
+    Buscando marcador...
   </div>
 
 
+  <!-- ========================= -->
+  <!-- AUDIOS -->
+  <!-- ========================= -->
+
   <audio
-    id="narracion"
-    src="/ar/personaje.mp3"
+    id="audio1"
+    src="/ar/parada1/audio1.mp3"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="audio2"
+    src="/ar/parada2/audio2.mp3"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="audio3"
+    src="/ar/parada3/audio3.mp3"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="audio4"
+    src="/ar/parada4/audio4.mp3"
     preload="auto"
   ></audio>
 
 
+  <!-- ========================= -->
+  <!-- ESCENA AR -->
+  <!-- ========================= -->
+
   <a-scene
-    id="escena"
 
     mindar-image="
       imageTargetSrc: /ar/targets.mind;
@@ -96,7 +126,8 @@
 
     renderer="
       colorManagement: true;
-      physicallyCorrectLights: true
+      physicallyCorrectLights: true;
+      antialias: true;
     "
 
     vr-mode-ui="enabled: false"
@@ -105,25 +136,29 @@
   >
 
 
+    <!-- ========================= -->
     <!-- ILUMINACIÓN -->
+    <!-- ========================= -->
 
     <a-entity
       light="
         type: ambient;
-        intensity: 1.5
+        intensity: 1.8;
       "
     ></a-entity>
 
     <a-entity
       light="
         type: directional;
-        intensity: 2
+        intensity: 2;
       "
       position="1 2 1"
     ></a-entity>
 
 
+    <!-- ========================= -->
     <!-- CÁMARA -->
+    <!-- ========================= -->
 
     <a-camera
       position="0 0 0"
@@ -131,39 +166,98 @@
     ></a-camera>
 
 
-    <!-- TARGET -->
+    <!-- ================================================= -->
+    <!-- PARADA 1 -->
+    <!-- targetIndex 0 -->
+    <!-- ================================================= -->
 
     <a-entity
-      id="target"
+      id="target1"
       mindar-image-target="targetIndex: 0"
     >
 
-
-      <!-- CUBO DE PRUEBA -->
-
-      <a-box
-        position="0 0.25 0"
-        width="0.25"
-        height="0.25"
-        depth="0.25"
-        color="#A3732F"
-      ></a-box>
-
-
-      <!-- MODELO -->
-
       <a-gltf-model
-        id="modelo"
+        id="modelo1"
+        src="/ar/parada1/modelo1.glb"
 
-        src="/ar/personaje.glb"
-
-        position="0 0 0.1"
+        position="0 0 0"
 
         rotation="0 180 0"
 
         scale="0.02 0.02 0.02"
       ></a-gltf-model>
 
+    </a-entity>
+
+
+    <!-- ================================================= -->
+    <!-- PARADA 2 -->
+    <!-- targetIndex 1 -->
+    <!-- ================================================= -->
+
+    <a-entity
+      id="target2"
+      mindar-image-target="targetIndex: 1"
+    >
+
+      <a-gltf-model
+        id="modelo2"
+        src="/ar/parada2/modelo2.glb"
+
+        position="0 0 0"
+
+        rotation="0 180 0"
+
+        scale="0.02 0.02 0.02"
+      ></a-gltf-model>
+
+    </a-entity>
+
+
+    <!-- ================================================= -->
+    <!-- PARADA 3 -->
+    <!-- targetIndex 2 -->
+    <!-- ================================================= -->
+
+    <a-entity
+      id="target3"
+      mindar-image-target="targetIndex: 2"
+    >
+
+      <a-gltf-model
+        id="modelo3"
+        src="/ar/parada3/modelo3.glb"
+
+        position="0 0 0"
+
+        rotation="0 180 0"
+
+        scale="0.02 0.02 0.02"
+      ></a-gltf-model>
+
+    </a-entity>
+
+
+    <!-- ================================================= -->
+    <!-- PARADA 4 -->
+    <!-- targetIndex 3 -->
+    <!-- ================================================= -->
+
+    <a-entity
+      id="target4"
+      mindar-image-target="targetIndex: 3"
+    >
+
+      <a-gltf-model
+        id="modelo4"
+        src="/ar/parada4/modelo4.glb"
+
+        position="0 0 0"
+
+        rotation="0 180 0"
+
+        scale="0.02 0.02 0.02"
+      ></a-gltf-model>
 
     </a-entity>
 
@@ -174,74 +268,369 @@
 
     document.addEventListener("DOMContentLoaded", () => {
 
-      const target =
-        document.getElementById("target");
-
-      const modelo =
-        document.getElementById("modelo");
-
-      const audio =
-        document.getElementById("narracion");
-
       const estado =
         document.getElementById("estado");
 
 
-      modelo.addEventListener(
+      /* ============================================
+         AUDIOS
+      ============================================ */
+
+      const audio1 =
+        document.getElementById("audio1");
+
+      const audio2 =
+        document.getElementById("audio2");
+
+      const audio3 =
+        document.getElementById("audio3");
+
+      const audio4 =
+        document.getElementById("audio4");
+
+
+      const audios = [
+        audio1,
+        audio2,
+        audio3,
+        audio4
+      ];
+
+
+      /* ============================================
+         TARGETS
+      ============================================ */
+
+      const target1 =
+        document.getElementById("target1");
+
+      const target2 =
+        document.getElementById("target2");
+
+      const target3 =
+        document.getElementById("target3");
+
+      const target4 =
+        document.getElementById("target4");
+
+
+      /* ============================================
+         MODELOS
+      ============================================ */
+
+      const modelo1 =
+        document.getElementById("modelo1");
+
+      const modelo2 =
+        document.getElementById("modelo2");
+
+      const modelo3 =
+        document.getElementById("modelo3");
+
+      const modelo4 =
+        document.getElementById("modelo4");
+
+
+      /* ============================================
+         DETENER TODOS LOS AUDIOS
+      ============================================ */
+
+      function detenerAudios() {
+
+        audios.forEach((audio) => {
+
+          audio.pause();
+          audio.currentTime = 0;
+
+        });
+
+      }
+
+
+      /* ============================================
+         REPRODUCIR AUDIO
+      ============================================ */
+
+      function reproducirAudio(audio) {
+
+        detenerAudios();
+
+        audio.currentTime = 0;
+
+        audio.play()
+          .then(() => {
+
+            console.log("🔊 Audio reproduciendo");
+
+          })
+          .catch((error) => {
+
+            console.warn(
+              "Audio bloqueado:",
+              error
+            );
+
+          });
+
+      }
+
+
+      /* ============================================
+         MODELO 1
+      ============================================ */
+
+      modelo1.addEventListener(
         "model-loaded",
         () => {
 
           console.log(
-            "✅ GLB cargado"
+            "✅ modelo1.glb cargado"
           );
-
-          estado.textContent =
-            "Modelo 3D cargado";
 
         }
       );
 
-
-      modelo.addEventListener(
+      modelo1.addEventListener(
         "model-error",
         (event) => {
 
           console.error(
-            "❌ Error GLB",
+            "❌ Error modelo1.glb",
             event
           );
-
-          estado.textContent =
-            "Error cargando modelo 3D";
 
         }
       );
 
 
-      target.addEventListener(
+      /* ============================================
+         MODELO 2
+      ============================================ */
+
+      modelo2.addEventListener(
+        "model-loaded",
+        () => {
+
+          console.log(
+            "✅ modelo2.glb cargado"
+          );
+
+        }
+      );
+
+      modelo2.addEventListener(
+        "model-error",
+        (event) => {
+
+          console.error(
+            "❌ Error modelo2.glb",
+            event
+          );
+
+        }
+      );
+
+
+      /* ============================================
+         MODELO 3
+      ============================================ */
+
+      modelo3.addEventListener(
+        "model-loaded",
+        () => {
+
+          console.log(
+            "✅ modelo3.glb cargado"
+          );
+
+        }
+      );
+
+      modelo3.addEventListener(
+        "model-error",
+        (event) => {
+
+          console.error(
+            "❌ Error modelo3.glb",
+            event
+          );
+
+        }
+      );
+
+
+      /* ============================================
+         MODELO 4
+      ============================================ */
+
+      modelo4.addEventListener(
+        "model-loaded",
+        () => {
+
+          console.log(
+            "✅ modelo4.glb cargado"
+          );
+
+        }
+      );
+
+      modelo4.addEventListener(
+        "model-error",
+        (event) => {
+
+          console.error(
+            "❌ Error modelo4.glb",
+            event
+          );
+
+        }
+      );
+
+
+      /* ============================================
+         PARADA 1
+      ============================================ */
+
+      target1.addEventListener(
         "targetFound",
         () => {
 
           console.log(
-            "🎯 Marcador detectado"
+            "🎯 PARADA 1 DETECTADA"
           );
 
           estado.textContent =
-            "Marcador detectado";
+            "Parada 1 detectada";
 
-          audio.currentTime = 0;
-
-          audio
-            .play()
-            .catch(() => {});
+          reproducirAudio(audio1);
 
         }
       );
 
 
-      target.addEventListener(
+      target1.addEventListener(
         "targetLost",
         () => {
+
+          console.log(
+            "Parada 1 perdida"
+          );
+
+          audio1.pause();
+
+          estado.textContent =
+            "Buscando marcador...";
+
+        }
+      );
+
+
+      /* ============================================
+         PARADA 2
+      ============================================ */
+
+      target2.addEventListener(
+        "targetFound",
+        () => {
+
+          console.log(
+            "🎯 PARADA 2 DETECTADA"
+          );
+
+          estado.textContent =
+            "Parada 2 detectada";
+
+          reproducirAudio(audio2);
+
+        }
+      );
+
+
+      target2.addEventListener(
+        "targetLost",
+        () => {
+
+          console.log(
+            "Parada 2 perdida"
+          );
+
+          audio2.pause();
+
+          estado.textContent =
+            "Buscando marcador...";
+
+        }
+      );
+
+
+      /* ============================================
+         PARADA 3
+      ============================================ */
+
+      target3.addEventListener(
+        "targetFound",
+        () => {
+
+          console.log(
+            "🎯 PARADA 3 DETECTADA"
+          );
+
+          estado.textContent =
+            "Parada 3 detectada";
+
+          reproducirAudio(audio3);
+
+        }
+      );
+
+
+      target3.addEventListener(
+        "targetLost",
+        () => {
+
+          console.log(
+            "Parada 3 perdida"
+          );
+
+          audio3.pause();
+
+          estado.textContent =
+            "Buscando marcador...";
+
+        }
+      );
+
+
+      /* ============================================
+         PARADA 4
+      ============================================ */
+
+      target4.addEventListener(
+        "targetFound",
+        () => {
+
+          console.log(
+            "🎯 PARADA 4 DETECTADA"
+          );
+
+          estado.textContent =
+            "Parada 4 detectada";
+
+          reproducirAudio(audio4);
+
+        }
+      );
+
+
+      target4.addEventListener(
+        "targetLost",
+        () => {
+
+          console.log(
+            "Parada 4 perdida"
+          );
+
+          audio4.pause();
 
           estado.textContent =
             "Buscando marcador...";

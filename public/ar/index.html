@@ -122,7 +122,35 @@
       <!-- CÁMARA -->
       <!-- ========================= -->
 
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+      <a-camera id="camera" position="0 0 0" look-controls="enabled: false">
+        <!--
+    VISOR PERSISTENTE DE PARADA 1
+
+    Al estar dentro de la cámara,
+    NO depende del marcador.
+  -->
+
+        <a-entity id="visorParada1" position="0 -0.25 -1.5" visible="false">
+          <!-- Cubo testigo -->
+          <a-box
+            id="cuboPersistente"
+            position="-0.45 0 0"
+            width="0.15"
+            height="0.15"
+            depth="0.15"
+            color="#A3732F"
+          ></a-box>
+
+          <!-- Modelo real -->
+          <a-gltf-model
+            id="modeloPersistente1"
+            src="/ar/parada1/modelo1.glb"
+            position="0 0 0"
+            rotation="0 180 0"
+            scale="0.02 0.02 0.02"
+          ></a-gltf-model>
+        </a-entity>
+      </a-camera>
 
       <!-- ================================================= -->
       <!-- PARADA 1 -->
@@ -174,20 +202,16 @@
       <!-- targetIndex 3 -->
       <!-- ================================================= -->
 
-      <a-entity id="target4" mindar-image-target="targetIndex: 3">
-        <a-gltf-model
-          id="modelo4"
-          src="/ar/parada1/modelo1.glb"
-          position="0 0 0"
-          rotation="0 180 0"
-          scale="0.02 0.02 0.02"
-        ></a-gltf-model>
-      </a-entity>
+      <a-entity id="target4" mindar-image-target="targetIndex: 3"></a-entity>
     </a-scene>
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const estado = document.getElementById("estado");
+
+        // Visor 3D persistente de la Parada 1
+        const visorParada1 = document.getElementById("visorParada1");
+        const modeloPersistente1 = document.getElementById("modeloPersistente1");
 
         /* ============================================
          AUDIOS
@@ -225,7 +249,8 @@
 
         const modelo3 = document.getElementById("modelo3");
 
-        const modelo4 = document.getElementById("modelo4");
+        // modelo4 se retiró del targetIndex 3 porque la Parada 1
+        // ahora usa un modelo persistente ligado a la cámara.
 
         /* ============================================
          DETENER TODOS LOS AUDIOS
@@ -294,15 +319,16 @@
         });
 
         /* ============================================
-         MODELO 4
+         MODELO PERSISTENTE - PARADA 1
       ============================================ */
 
-        modelo4.addEventListener("model-loaded", () => {
-          console.log("✅ modelo4.glb cargado");
+        modeloPersistente1.addEventListener("model-loaded", () => {
+          console.log("✅ modelo1.glb persistente cargado correctamente");
         });
 
-        modelo4.addEventListener("model-error", (event) => {
-          console.error("❌ Error modelo4.glb", event);
+        modeloPersistente1.addEventListener("model-error", (event) => {
+          console.error("❌ Error cargando modelo1.glb persistente", event);
+          estado.textContent = "Parada 1 activa - error en modelo 3D";
         });
 
         /* ============================================
@@ -374,12 +400,17 @@
 
           estado.textContent = "Parada 1 detectada";
 
+          // El modelo queda fijo frente a la cámara y no depende del marcador.
+          visorParada1.setAttribute("visible", true);
+
+          // Inicia audio1. Solo se detendrá al activar otra experiencia.
           reproducirAudio(audio1);
         });
 
         target4.addEventListener("targetLost", () => {
           console.log("Parada 1 fuera de cámara - experiencia continúa");
 
+          // No pausamos audio1 y no ocultamos el visor.
           estado.textContent = "Experiencia Parada 1 activa";
         });
       });

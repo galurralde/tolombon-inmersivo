@@ -1,213 +1,300 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
 
-<title>Tolombón Inmersivo AR</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
-<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  <title>Tolombón Inmersivo AR</title>
 
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 
-<style>
-body{
-  margin:0;
-  overflow:hidden;
-  font-family:Arial, sans-serif;
-}
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-.mensaje{
-  position:fixed;
-  top:20px;
-  width:100%;
-  text-align:center;
-  color:white;
-  font-size:20px;
-  text-shadow:0 0 10px black;
-  z-index:999;
-}
-</style>
-
-</head>
-<body>
-
-<div class="mensaje">
-  Apuntá la cámara al marcador correspondiente
-</div>
-
-<a-scene
-  mindar-image="imageTargetSrc: ./targets.mind; autoStart: true;"
-  color-space="sRGB"
-  embedded
-  renderer="physicallyCorrectLights: true; colorManagement: true;"
-  vr-mode-ui="enabled:false"
-  device-orientation-permission-ui="enabled:false"
->
-
-<a-assets>
-
-  <!-- MODELOS -->
-
-  <a-asset-item
-    id="modelo1"
-    src="./parada1/modelo1.glb">
-  </a-asset-item>
-
-  <a-asset-item
-    id="modelo2"
-    src="./parada2/modelo2.glb">
-  </a-asset-item>
-
-  <a-asset-item
-    id="modelo3"
-    src="./parada3/modelo3.glb">
-  </a-asset-item>
-
-  <a-asset-item
-    id="modelo4"
-    src="./parada4/modelo4.glb">
-  </a-asset-item>
-
-  <!-- AUDIOS -->
-
-  <audio
-    id="audio1"
-    src="./parada1/audio1.mp3">
-  </audio>
-
-  <audio
-    id="audio2"
-    src="./parada2/audio2.mp3">
-  </audio>
-
-  <audio
-    id="audio3"
-    src="./parada3/audio3.mp3">
-  </audio>
-
-  <audio
-    id="audio4"
-    src="./parada4/audio4.mp3">
-  </audio>
-
-</a-assets>
-
-<!-- LUCES -->
-
-<a-light
-  type="ambient"
-  intensity="1.5">
-</a-light>
-
-<a-light
-  type="directional"
-  position="0 2 1"
-  intensity="2">
-</a-light>
-
-<a-camera
-  position="0 0 0"
-  look-controls="enabled:false">
-</a-camera>
-
-<!-- targetIndex 0 = marcador4 -->
-
-<a-entity mindar-image-target="targetIndex:0">
-
-<a-gltf-model
-src="#modelo4"
-position="0 0 0"
-rotation="0 0 0"
-scale="0.01 0.01 0.01">
-</a-gltf-model>
-
-</a-entity>
-
-<!-- targetIndex 1 = marcador3 -->
-
-<a-entity mindar-image-target="targetIndex: 1">
-
-  <a-gltf-model
-    src="#modelo3"
-    position="0 0 0"
-    rotation="0 0 0"
-    scale="0.01 0.01 0.01">
-  </a-gltf-model>
-
-</a-entity>
-
-<!-- targetIndex 2 = marcador2 -->
-
-<a-entity mindar-image-target="targetIndex: 2">
-
-  <a-gltf-model
-    src="#modelo2"
-    position="0 0 0"
-    rotation="0 0 0"
-    scale="0.01 0.01 0.01">
-  </a-gltf-model>
-
-</a-entity>
-
-<!-- targetIndex 3 = marcador1 -->
-
-<a-entity mindar-image-target="targetIndex: 3">
-
-  <a-box
-    position="0 0 0"
-    width="0.3"
-    height="0.3"
-    depth="0.3"
-    color="red">
-  </a-box>
-
-  <a-gltf-model
-    src="#modelo1"
-    position="0 0 0"
-    rotation="0 0 0"
-    scale="0.05 0.05 0.05">
-  </a-gltf-model>
-
-</a-entity>
-
-</a-scene>
-
-<script>
-
-function reproducir(id){
-
-  ["audio1","audio2","audio3","audio4"].forEach(a=>{
-
-    const audio=document.getElementById(a);
-
-    if(audio){
-      audio.pause();
-      audio.currentTime=0;
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
     }
 
-  });
+    .mensaje {
+      position: fixed;
+      top: 20px;
+      left: 0;
+      width: 100%;
+      text-align: center;
 
-  const audio=document.getElementById(id);
+      color: white;
+      font-size: 20px;
+      font-family: Arial, sans-serif;
 
-  if(audio){
-    audio.play().catch(()=>{});
-  }
+      text-shadow:
+        0 0 5px black,
+        0 0 10px black;
 
-}
+      z-index: 999;
+    }
 
-window.onload=()=>{
+    .estado {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
 
-const entidades=document.querySelectorAll("[mindar-image-target]");
+      transform: translateX(-50%);
 
-entidades[0].addEventListener("targetFound",()=>reproducir("audio4"));
-entidades[1].addEventListener("targetFound",()=>reproducir("audio3"));
-entidades[2].addEventListener("targetFound",()=>reproducir("audio2"));
-entidades[3].addEventListener("targetFound",()=>reproducir("audio1"));
+      background: rgba(0,0,0,.65);
+      color: white;
 
-}
+      padding: 10px 16px;
+      border-radius: 10px;
 
-</script>
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+
+      z-index: 999;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="mensaje">
+    Apuntá la cámara al marcador Guerrero
+  </div>
+
+  <div class="estado" id="estado">
+    Inicializando experiencia AR...
+  </div>
+
+
+  <a-scene
+    mindar-image="
+      imageTargetSrc: /ar/targets.mind;
+      autoStart: true;
+    "
+
+    color-space="sRGB"
+
+    renderer="
+      colorManagement: true;
+      physicallyCorrectLights: true;
+      antialias: true;
+    "
+
+    vr-mode-ui="enabled: false"
+
+    device-orientation-permission-ui="enabled: false"
+
+    embedded
+  >
+
+    <!-- ========================= -->
+    <!-- ASSETS -->
+    <!-- ========================= -->
+
+    <a-assets timeout="30000">
+
+      <a-asset-item
+        id="personaje"
+        src="/ar/personaje.glb"
+      >
+      </a-asset-item>
+
+      <audio
+        id="narracion"
+        src="/ar/personaje.mp3"
+        preload="auto"
+      >
+      </audio>
+
+    </a-assets>
+
+
+    <!-- ========================= -->
+    <!-- ILUMINACIÓN -->
+    <!-- ========================= -->
+
+    <a-entity
+      light="
+        type: ambient;
+        intensity: 1.5;
+      "
+    >
+    </a-entity>
+
+    <a-entity
+      light="
+        type: directional;
+        intensity: 2;
+      "
+      position="1 2 1"
+    >
+    </a-entity>
+
+
+    <!-- ========================= -->
+    <!-- CÁMARA -->
+    <!-- ========================= -->
+
+    <a-camera
+      position="0 0 0"
+      look-controls="enabled: false"
+    >
+    </a-camera>
+
+
+    <!-- ========================= -->
+    <!-- MARCADOR -->
+    <!-- ========================= -->
+
+    <a-entity
+      id="target"
+      mindar-image-target="targetIndex: 0"
+    >
+
+      <!-- Modelo -->
+
+      <a-gltf-model
+        id="modelo"
+        src="#personaje"
+
+        position="0 0 0"
+
+        rotation="0 180 0"
+
+        scale="0.02 0.02 0.02"
+      >
+      </a-gltf-model>
+
+
+      <!-- Cubo de diagnóstico -->
+
+      <a-box
+        id="cuboPrueba"
+
+        position="0 0.3 0"
+
+        scale="0.2 0.2 0.2"
+      >
+      </a-box>
+
+    </a-entity>
+
+  </a-scene>
+
+
+  <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const target =
+        document.getElementById("target");
+
+      const modelo =
+        document.getElementById("modelo");
+
+      const audio =
+        document.getElementById("narracion");
+
+      const estado =
+        document.getElementById("estado");
+
+
+      /* =========================
+         MODELO CARGADO
+      ========================= */
+
+      modelo.addEventListener(
+        "model-loaded",
+        () => {
+
+          console.log(
+            "✅ GLB cargado correctamente"
+          );
+
+          estado.textContent =
+            "Modelo 3D cargado";
+
+        }
+      );
+
+
+      /* =========================
+         ERROR DE MODELO
+      ========================= */
+
+      modelo.addEventListener(
+        "model-error",
+        (event) => {
+
+          console.error(
+            "❌ Error cargando GLB:",
+            event
+          );
+
+          estado.textContent =
+            "Error cargando modelo 3D";
+
+        }
+      );
+
+
+      /* =========================
+         MARCADOR DETECTADO
+      ========================= */
+
+      target.addEventListener(
+        "targetFound",
+        () => {
+
+          console.log(
+            "🎯 Marcador detectado"
+          );
+
+          estado.textContent =
+            "Marcador detectado";
+
+          audio.currentTime = 0;
+
+          audio
+            .play()
+            .catch((error) => {
+
+              console.warn(
+                "Audio bloqueado:",
+                error
+              );
+
+            });
+
+        }
+      );
+
+
+      /* =========================
+         MARCADOR PERDIDO
+      ========================= */
+
+      target.addEventListener(
+        "targetLost",
+        () => {
+
+          console.log(
+            "Marcador perdido"
+          );
+
+          estado.textContent =
+            "Buscando marcador...";
+
+        }
+      );
+
+    });
+
+  </script>
 
 </body>
 </html>

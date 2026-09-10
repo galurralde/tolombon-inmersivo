@@ -174,29 +174,15 @@
       <!-- targetIndex 3 -->
       <!-- ================================================= -->
 
-      <a-entity
-  id="target4"
-  mindar-image-target="targetIndex: 3"
->
-
-  <a-gltf-model
-    id="modelo4"
-    src="/ar/parada1/modelo1.glb"
-
-    position="0 0 0"
-
-    rotation="0 180 0"
-
-    scale="0.02 0.02 0.02"
-  ></a-gltf-model>
-
-</a-entity>
-
-
-
-
-
-
+      <a-entity id="target4" mindar-image-target="targetIndex: 3">
+        <a-gltf-model
+          id="modelo4"
+          src="/ar/parada1/modelo1.glb"
+          position="0 0 0"
+          rotation="0 180 0"
+          scale="0.02 0.02 0.02"
+        ></a-gltf-model>
+      </a-entity>
     </a-scene>
 
     <script>
@@ -392,11 +378,9 @@
         });
 
         target4.addEventListener("targetLost", () => {
-          console.log("Parada 1 perdida");
+          console.log("Parada 1 fuera de cámara - experiencia continúa");
 
-          audio1.pause();
-
-          estado.textContent = "Buscando marcador...";
+          estado.textContent = "Experiencia Parada 1 activa";
         });
       });
     </script>

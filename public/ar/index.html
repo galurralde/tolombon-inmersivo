@@ -508,25 +508,51 @@ ctx.drawImage(video,(canvas.width-w)/2,(canvas.height-h)/2,w,h);
 
 }
 
+/* MODELO - mantener proporción original */
 
-/* MODELO */
-
-const modelBlob=await modeloActivo.toBlob({
-mimeType:"image/png",
-idealAspect:true
+const modelBlob = await modeloActivo.toBlob({
+  mimeType: "image/png"
 });
 
-const imgModelo=new Image();
+const imgModelo = new Image();
 
-await new Promise(resolve=>{
+const modelURL = URL.createObjectURL(modelBlob);
 
-imgModelo.onload=resolve;
-
-imgModelo.src=URL.createObjectURL(modelBlob);
-
+await new Promise((resolve, reject) => {
+  imgModelo.onload = resolve;
+  imgModelo.onerror = reject;
+  imgModelo.src = modelURL;
 });
 
-ctx.drawImage(imgModelo,0,0,canvas.width,canvas.height);
+/*
+  IMPORTANTE:
+  Nunca estiramos el render del GLB.
+  Calculamos la escala conservando su relación de aspecto.
+*/
+
+const modeloWidth = imgModelo.naturalWidth;
+const modeloHeight = imgModelo.naturalHeight;
+
+const escalaModelo = Math.min(
+  canvas.width / modeloWidth,
+  canvas.height / modeloHeight
+);
+
+const anchoModelo = modeloWidth * escalaModelo;
+const altoModelo = modeloHeight * escalaModelo;
+
+const modeloX = (canvas.width - anchoModelo) / 2;
+const modeloY = (canvas.height - altoModelo) / 2;
+
+ctx.drawImage(
+  imgModelo,
+  modeloX,
+  modeloY,
+  anchoModelo,
+  altoModelo
+);
+
+URL.revokeObjectURL(modelURL);
 
 
 /* SELLO 2026 */

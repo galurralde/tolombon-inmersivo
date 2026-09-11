@@ -1,185 +1,220 @@
 <!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Tolombón Inmersivo AR</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Tolombón Inmersivo AR</title>
 
-  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"
+    ></script>
 
-  <style>
-    * { box-sizing: border-box; }
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-    html, body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      background: #000;
-    }
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+      }
 
-    .mensaje {
-      position: fixed;
-      top: calc(18px + env(safe-area-inset-top));
-      left: 0;
-      width: 100%;
-      padding: 0 18px;
-      text-align: center;
-      color: #fff;
-      font-size: clamp(16px, 4vw, 20px);
-      text-shadow: 0 0 5px #000, 0 0 10px #000;
-      z-index: 9999;
-      pointer-events: none;
-    }
+      .mensaje {
+        position: fixed;
+        top: calc(18px + env(safe-area-inset-top));
+        left: 0;
+        width: 100%;
+        padding: 0 18px;
+        text-align: center;
+        color: #fff;
+        font-size: clamp(16px, 4vw, 20px);
+        text-shadow:
+          0 0 5px #000,
+          0 0 10px #000;
+        z-index: 9999;
+        pointer-events: none;
+      }
 
-    .estado {
-      position: fixed;
-      bottom: calc(22px + env(safe-area-inset-bottom));
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 88vw;
-      background: rgba(0, 0, 0, 0.72);
-      color: #fff;
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-size: 14px;
-      text-align: center;
-      z-index: 9999;
-      pointer-events: none;
-      white-space: nowrap;
-    }
+      .estado {
+        position: fixed;
+        bottom: calc(22px + env(safe-area-inset-bottom));
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 88vw;
+        background: rgba(0, 0, 0, 0.72);
+        color: #fff;
+        padding: 10px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        text-align: center;
+        z-index: 9999;
+        pointer-events: none;
+        white-space: nowrap;
+      }
 
-    .modelo-overlay {
-      position: fixed;
-      inset: 0;
-      display: none;
-      width: 100vw;
-      height: 100dvh;
-      z-index: 9000;
-      pointer-events: none;
-    }
+      .modelo-overlay {
+        position: fixed;
+        inset: 0;
+        display: none;
+        width: 100vw;
+        height: 100dvh;
+        z-index: 9000;
+        pointer-events: none;
+      }
 
-    .modelo-overlay.activo { display: block; }
+      .modelo-overlay.activo {
+        display: block;
+      }
 
-    .modelo-card {
-      position: relative;
-      width: 100vw;
-      height: 100dvh;
-      background: transparent;
-      overflow: hidden;
-      pointer-events: auto;
-    }
+      .modelo-card {
+        position: relative;
+        width: 100vw;
+        height: 100dvh;
+        background: transparent;
+        overflow: hidden;
+        pointer-events: auto;
+      }
 
-    #modeloActivo {
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      --poster-color: transparent;
-    }
+      #modeloActivo {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        --poster-color: transparent;
+      }
 
-    .cerrar-modelo {
-      position: absolute;
-      top: calc(18px + env(safe-area-inset-top));
-      right: 18px;
-      z-index: 3;
-      border: 0;
-      border-radius: 999px;
-      padding: 11px 16px;
-      background: rgba(54, 37, 19, 0.9);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-    }
+      .cerrar-modelo {
+        position: absolute;
+        top: calc(18px + env(safe-area-inset-top));
+        right: 18px;
+        z-index: 3;
+        border: 0;
+        border-radius: 999px;
+        padding: 11px 16px;
+        background: rgba(54, 37, 19, 0.9);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+      }
 
-    .ayuda-modelo {
-      position: absolute;
-      left: 50%;
-      bottom: calc(78px + env(safe-area-inset-bottom));
-      transform: translateX(-50%);
-      z-index: 3;
-      max-width: 90vw;
-      background: rgba(0, 0, 0, 0.65);
-      color: #fff;
-      padding: 9px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      white-space: nowrap;
-      pointer-events: none;
-    }
-  </style>
-</head>
+      .ayuda-modelo {
+        position: absolute;
+        left: 50%;
+        bottom: calc(78px + env(safe-area-inset-bottom));
+        transform: translateX(-50%);
+        z-index: 3;
+        max-width: 90vw;
+        background: rgba(0, 0, 0, 0.65);
+        color: #fff;
+        padding: 9px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        white-space: nowrap;
+        pointer-events: none;
+      }
+    </style>
+  </head>
 
-<body>
-  <div id="mensaje" class="mensaje">Apuntá la cámara a uno de los marcadores</div>
-  <div id="estado" class="estado">Buscando marcador...</div>
-
-  <div id="modeloOverlay" class="modelo-overlay">
-    <div class="modelo-card">
-      <button id="cerrarModelo" class="cerrar-modelo" type="button">✕ Cerrar modelo</button>
-
-      <model-viewer
-        id="modeloActivo"
-        alt="Modelo 3D interpretativo de Tolombón"
-        camera-controls
-        auto-rotate
-        interaction-prompt="none"
-        shadow-intensity="1"
-        exposure="1.2"
-        loading="eager"
-        reveal="auto">
-      </model-viewer>
-
-      <div class="ayuda-modelo">Arrastrá para girar · Pellizcá para acercar</div>
+  <body>
+    <div id="mensaje" class="mensaje">
+      Apuntá la cámara a uno de los marcadores
     </div>
-  </div>
+    <div id="estado" class="estado">Buscando marcador...</div>
 
-  <audio id="audio1" src="/ar/parada1/audio1.mp3" preload="auto"></audio>
-  <audio id="audio2" src="/ar/parada2/audio2.mp3" preload="auto"></audio>
-  <audio id="audio3" src="/ar/parada3/audio3.mp3" preload="auto"></audio>
-  <audio id="audio4" src="/ar/parada4/audio4.mp3" preload="auto"></audio>
+    <div id="modeloOverlay" class="modelo-overlay">
+      <div class="modelo-card">
+        <button id="cerrarModelo" class="cerrar-modelo" type="button">
+          ✕ Cerrar modelo
+        </button>
 
-  <a-scene
-    mindar-image="imageTargetSrc: /ar/targets.mind; autoStart: true;"
-    color-space="sRGB"
-    renderer="colorManagement: true; physicallyCorrectLights: true; antialias: true;"
-    vr-mode-ui="enabled: false"
-    device-orientation-permission-ui="enabled: false">
+        <model-viewer
+          id="modeloActivo"
+          alt="Modelo 3D interpretativo de Tolombón"
+          camera-controls
+          auto-rotate
+          interaction-prompt="none"
+          shadow-intensity="1"
+          exposure="1.2"
+          loading="eager"
+          reveal="auto"
+        >
+        </model-viewer>
 
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+        <div class="ayuda-modelo">
+          Arrastrá para girar · Pellizcá para acercar
+        </div>
+      </div>
+    </div>
 
-    <a-entity id="target0" mindar-image-target="targetIndex: 0"></a-entity>
-    <a-entity id="target1" mindar-image-target="targetIndex: 1"></a-entity>
-    <a-entity id="target2" mindar-image-target="targetIndex: 2"></a-entity>
-    <a-entity id="target3" mindar-image-target="targetIndex: 3"></a-entity>
-  </a-scene>
+    <audio id="audio1" src="/ar/parada1/audio1.mp3" preload="auto"></audio>
+    <audio id="audio2" src="/ar/parada2/audio2.mp3" preload="auto"></audio>
+    <audio id="audio3" src="/ar/parada3/audio3.mp3" preload="auto"></audio>
+    <audio id="audio4" src="/ar/parada4/audio4.mp3" preload="auto"></audio>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const estado = document.getElementById("estado");
-      const mensaje = document.getElementById("mensaje");
-      const modeloOverlay = document.getElementById("modeloOverlay");
-      const modeloActivo = document.getElementById("modeloActivo");
-      const cerrarModelo = document.getElementById("cerrarModelo");
+    <a-scene
+      mindar-image="imageTargetSrc: /ar/targets.mind; autoStart: true;"
+      color-space="sRGB"
+      renderer="colorManagement: true; physicallyCorrectLights: true; antialias: true;"
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false"
+    >
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-      const audios = {
-        1: document.getElementById("audio1"),
-        2: document.getElementById("audio2"),
-        3: document.getElementById("audio3"),
-        4: document.getElementById("audio4")
-      };
+      <a-entity id="target0" mindar-image-target="targetIndex: 0"></a-entity>
+      <a-entity id="target1" mindar-image-target="targetIndex: 1"></a-entity>
+      <a-entity id="target2" mindar-image-target="targetIndex: 2"></a-entity>
+      <a-entity id="target3" mindar-image-target="targetIndex: 3"></a-entity>
+    </a-scene>
 
-      const PARADAS = {
-        1: { nombre: "Parada 1", audio: audios[1], modelo: "/ar/parada1/modelo1.glb" },
-        2: { nombre: "Parada 2", audio: audios[2], modelo: "/ar/parada2/modelo2.glb" },
-        3: { nombre: "Parada 3", audio: audios[3], modelo: "/ar/parada3/modelo3.glb" },
-        4: { nombre: "Parada 4", audio: audios[4], modelo: "/ar/parada4/modelo4.glb" }
-      };
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const estado = document.getElementById("estado");
+        const mensaje = document.getElementById("mensaje");
+        const modeloOverlay = document.getElementById("modeloOverlay");
+        const modeloActivo = document.getElementById("modeloActivo");
+        const cerrarModelo = document.getElementById("cerrarModelo");
 
-      /*
+        const audios = {
+          1: document.getElementById("audio1"),
+          2: document.getElementById("audio2"),
+          3: document.getElementById("audio3"),
+          4: document.getElementById("audio4"),
+        };
+
+        const PARADAS = {
+          1: {
+            nombre: "Parada 1",
+            audio: audios[1],
+            modelo: "/ar/parada1/modelo1.glb",
+          },
+          2: {
+            nombre: "Parada 2",
+            audio: audios[2],
+            modelo: "/ar/parada2/modelo2.glb",
+          },
+          3: {
+            nombre: "Parada 3",
+            audio: audios[3],
+            modelo: "/ar/parada3/modelo3.glb",
+          },
+          4: {
+            nombre: "Parada 4",
+            audio: audios[4],
+            modelo: "/ar/parada4/modelo4.glb",
+          },
+        };
+
+        /*
         Mapeo limpio de índices a paradas.
         Confirmado en pruebas:
         - targetIndex 3 -> Parada 1
@@ -188,107 +223,119 @@
         - targetIndex 0 -> Parada 2
         - targetIndex 2 -> Parada 4
       */
-      const MAPA_TARGETS = {
-        0: 2,
-        1: 3,
-        2: 4,
-        3: 1
-      };
+        const MAPA_TARGETS = {
+          0: 2,
+          1: 3,
+          2: 4,
+          3: 1,
+        };
 
-      let paradaActiva = null;
+        let paradaActiva = null;
 
-      function detenerAudios() {
-        Object.values(audios).forEach((audio) => {
-          audio.pause();
-          audio.currentTime = 0;
-        });
-      }
-
-      function ocultarGuiasEscaneo() {
-        const scanningUI = document.querySelector(".mindar-ui-scanning");
-        if (scanningUI) scanningUI.style.display = "none";
-      }
-
-      function mostrarGuiasEscaneo() {
-        const scanningUI = document.querySelector(".mindar-ui-scanning");
-        if (scanningUI) scanningUI.style.display = "";
-      }
-
-      function activarParada(numeroParada, targetIndex) {
-        const parada = PARADAS[numeroParada];
-        if (!parada) return;
-
-        if (
-          paradaActiva === numeroParada &&
-          modeloOverlay.classList.contains("activo")
-        ) {
-          return;
+        function detenerAudios() {
+          Object.values(audios).forEach((audio) => {
+            audio.pause();
+            audio.currentTime = 0;
+          });
         }
 
-        paradaActiva = numeroParada;
+        function ocultarGuiasEscaneo() {
+          const scanningUI = document.querySelector(".mindar-ui-scanning");
+          if (scanningUI) scanningUI.style.display = "none";
+        }
 
-        console.log(`🎯 ${parada.nombre} detectada - targetIndex ${targetIndex}`);
-        estado.textContent = `${parada.nombre} detectada`;
+        function mostrarGuiasEscaneo() {
+          const scanningUI = document.querySelector(".mindar-ui-scanning");
+          if (scanningUI) scanningUI.style.display = "";
+        }
 
-        modeloActivo.setAttribute("src", parada.modelo);
-        modeloActivo.setAttribute("alt", `Modelo 3D interpretativo de ${parada.nombre}`);
+        function activarParada(numeroParada, targetIndex) {
+          const parada = PARADAS[numeroParada];
+          if (!parada) return;
 
-        modeloOverlay.classList.add("activo");
-        ocultarGuiasEscaneo();
-        mensaje.style.display = "none";
-
-        detenerAudios();
-        parada.audio.currentTime = 0;
-
-        parada.audio.play()
-          .then(() => console.log(`🔊 Audio de ${parada.nombre} reproduciendo`))
-          .catch((error) => console.warn(`Audio de ${parada.nombre} bloqueado:`, error));
-      }
-
-      function cerrarExperiencia() {
-        modeloOverlay.classList.remove("activo");
-        detenerAudios();
-        modeloActivo.removeAttribute("src");
-        paradaActiva = null;
-        mostrarGuiasEscaneo();
-        mensaje.style.display = "";
-        estado.textContent = "Buscando marcador...";
-      }
-
-      modeloActivo.addEventListener("load", () => {
-        console.log("✅ GLB cargado correctamente en model-viewer");
-      });
-
-      modeloActivo.addEventListener("error", (event) => {
-        console.error("❌ Error cargando GLB", event);
-        estado.textContent = paradaActiva
-          ? `Parada ${paradaActiva} activa - error cargando modelo 3D`
-          : "Error cargando modelo 3D";
-      });
-
-      cerrarModelo.addEventListener("click", cerrarExperiencia);
-
-      const targets = [
-        document.getElementById("target0"),
-        document.getElementById("target1"),
-        document.getElementById("target2"),
-        document.getElementById("target3")
-      ];
-
-      targets.forEach((target, targetIndex) => {
-        target.addEventListener("targetFound", () => {
-          const numeroParada = MAPA_TARGETS[targetIndex];
-          activarParada(numeroParada, targetIndex);
-        });
-
-        target.addEventListener("targetLost", () => {
-          if (paradaActiva) {
-            console.log(`Marcador fuera de cámara. Parada ${paradaActiva} continúa activa.`);
-            estado.textContent = `Experiencia Parada ${paradaActiva} activa`;
+          if (
+            paradaActiva === numeroParada &&
+            modeloOverlay.classList.contains("activo")
+          ) {
+            return;
           }
+
+          paradaActiva = numeroParada;
+
+          console.log(
+            `🎯 ${parada.nombre} detectada - targetIndex ${targetIndex}`,
+          );
+          estado.textContent = `${parada.nombre} detectada`;
+
+          modeloActivo.setAttribute("src", parada.modelo);
+          modeloActivo.setAttribute(
+            "alt",
+            `Modelo 3D interpretativo de ${parada.nombre}`,
+          );
+
+          modeloOverlay.classList.add("activo");
+          ocultarGuiasEscaneo();
+          mensaje.style.display = "none";
+
+          detenerAudios();
+          parada.audio.currentTime = 0;
+
+          parada.audio
+            .play()
+            .then(() =>
+              console.log(`🔊 Audio de ${parada.nombre} reproduciendo`),
+            )
+            .catch((error) =>
+              console.warn(`Audio de ${parada.nombre} bloqueado:`, error),
+            );
+        }
+
+        function cerrarExperiencia() {
+          modeloOverlay.classList.remove("activo");
+          detenerAudios();
+          modeloActivo.removeAttribute("src");
+          paradaActiva = null;
+          mostrarGuiasEscaneo();
+          mensaje.style.display = "";
+          estado.textContent = "Buscando marcador...";
+        }
+
+        modeloActivo.addEventListener("load", () => {
+          console.log("✅ GLB cargado correctamente en model-viewer");
+        });
+
+        modeloActivo.addEventListener("error", (event) => {
+          console.error("❌ Error cargando GLB", event);
+          estado.textContent = paradaActiva
+            ? `Parada ${paradaActiva} activa - error cargando modelo 3D`
+            : "Error cargando modelo 3D";
+        });
+
+        cerrarModelo.addEventListener("click", cerrarExperiencia);
+
+        const targets = [
+          document.getElementById("target0"),
+          document.getElementById("target1"),
+          document.getElementById("target2"),
+          document.getElementById("target3"),
+        ];
+
+        targets.forEach((target, targetIndex) => {
+          target.addEventListener("targetFound", () => {
+            const numeroParada = MAPA_TARGETS[targetIndex];
+            activarParada(numeroParada, targetIndex);
+          });
+
+          target.addEventListener("targetLost", () => {
+            if (paradaActiva) {
+              console.log(
+                `Marcador fuera de cámara. Parada ${paradaActiva} continúa activa.`,
+              );
+              estado.textContent = `Experiencia Parada ${paradaActiva} activa`;
+            }
+          });
         });
       });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>

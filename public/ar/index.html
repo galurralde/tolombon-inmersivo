@@ -508,10 +508,12 @@ ctx.drawImage(video,(canvas.width-w)/2,(canvas.height-h)/2,w,h);
 
 }
 
-/* MODELO - mantener proporción original */
+
+/* MODELO - CAPTURA SIN DEFORMAR */
 
 const modelBlob = await modeloActivo.toBlob({
-  mimeType: "image/png"
+  mimeType: "image/png",
+  idealAspect: true
 });
 
 const imgModelo = new Image();
@@ -525,13 +527,19 @@ await new Promise((resolve, reject) => {
 });
 
 /*
-  IMPORTANTE:
-  Nunca estiramos el render del GLB.
-  Calculamos la escala conservando su relación de aspecto.
+  Conservamos la relación de aspecto del render.
+  NO estiramos el GLB a 1080 x 1920.
 */
 
 const modeloWidth = imgModelo.naturalWidth;
 const modeloHeight = imgModelo.naturalHeight;
+
+console.log(
+  "Captura GLB:",
+  modeloWidth,
+  "x",
+  modeloHeight
+);
 
 const escalaModelo = Math.min(
   canvas.width / modeloWidth,
@@ -553,7 +561,6 @@ ctx.drawImage(
 );
 
 URL.revokeObjectURL(modelURL);
-
 
 /* SELLO 2026 */
 

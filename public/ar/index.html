@@ -470,280 +470,162 @@ estado.textContent=`Experiencia Parada ${paradaActiva} activa`;
 });
 
 
-fotoModelo.addEventListener("click", async () => {
-
-  try {
-
-    estado.textContent = "Generando fotografía...";
-
-    /* =========================================
-       MEDIDAS REALES DEL VISOR
-    ========================================= */
-
-    const rect = modeloActivo.getBoundingClientRect();
+/* =========================================
+   FOTO
+========================================= */
 
-    const FOTO_ANCHO = 1080;
+fotoModelo.addEventListener("click",async()=>{
 
-    /*
-      Mantenemos exactamente la proporción
-      que tiene model-viewer en pantalla.
-    */
-    const FOTO_ALTO = Math.round(
-      FOTO_ANCHO * (rect.height / rect.width)
-    );
-
-    /*
-      El banner va DEBAJO de la foto.
-      Ya no tapa ninguna parte del GLB.
-    */
-    const BANNER_ALTO = 270;
-
-    const canvas = document.createElement("canvas");
-
-    canvas.width = FOTO_ANCHO;
-    canvas.height = FOTO_ALTO + BANNER_ALTO;
-
-    const ctx = canvas.getContext("2d");
-
-
-    /* =========================================
-       1. CÁMARA
-    ========================================= */
-
-    const videos = [...document.querySelectorAll("video")];
-
-    const video = videos.find(
-      v => v.readyState >= 2 && v.videoWidth > 0
-    );
-
-    if (!video) {
-      throw new Error("No se encontró el video de la cámara.");
-    }
-
-    const vw = video.videoWidth;
-    const vh = video.videoHeight;
+try{
 
-    /*
-      COVER:
-      llena completamente la misma zona
-      visible que utiliza model-viewer.
-    */
-    const escalaVideo = Math.max(
-      FOTO_ANCHO / vw,
-      FOTO_ALTO / vh
-    );
+estado.textContent="Generando fotografía...";
 
-    const videoW = vw * escalaVideo;
-    const videoH = vh * escalaVideo;
+const canvas=document.createElement("canvas");
 
-    const videoX = (FOTO_ANCHO - videoW) / 2;
-    const videoY = (FOTO_ALTO - videoH) / 2;
+canvas.width=1080;
+canvas.height=1920;
 
-    ctx.drawImage(
-      video,
-      videoX,
-      videoY,
-      videoW,
-      videoH
-    );
+const ctx=canvas.getContext("2d");
 
 
-    /* =========================================
-       2. MODELO 3D
-       Capturamos la vista ACTUAL.
-    ========================================= */
+/* CAMARA */
 
-    /*
-      Esperamos dos frames para asegurarnos de que
-      model-viewer haya terminado de renderizar
-      la posición que dejó el usuario.
-    */
+const videos=[...document.querySelectorAll("video")];
 
-    await new Promise(resolve =>
-      requestAnimationFrame(() =>
-        requestAnimationFrame(resolve)
-      )
-    );
+const video=videos.find(v=>v.readyState>=2);
 
-    /*
-      false = conservar el aspecto del canvas actual
-      de model-viewer, NO el "poster ideal".
-    */
-    const modelBlob = await modeloActivo.toBlob({
-      mimeType: "image/png",
-      idealAspect: false
-    });
+if(video){
 
-    if (!modelBlob || modelBlob.size === 0) {
-      throw new Error("La captura del modelo 3D está vacía.");
-    }
+const vw=video.videoWidth;
+const vh=video.videoHeight;
 
-    const modelURL = URL.createObjectURL(modelBlob);
+const scale=Math.max(canvas.width/vw,canvas.height/vh);
 
-    const imgModelo = new Image();
+const w=vw*scale;
+const h=vh*scale;
 
-    await new Promise((resolve, reject) => {
-      imgModelo.onload = resolve;
-      imgModelo.onerror = reject;
-      imgModelo.src = modelURL;
-    });
+ctx.drawImage(video,(canvas.width-w)/2,(canvas.height-h)/2,w,h);
 
-    console.log(
-      "Captura model-viewer:",
-      imgModelo.naturalWidth,
-      "x",
-      imgModelo.naturalHeight
-    );
+}
 
-    /*
-      La imagen capturada conserva la proporción
-      del model-viewer visible.
 
-      La dibujamos exactamente en la zona de foto,
-      NO sobre la zona del banner.
-    */
+/* MODELO - CAPTURA SIN DEFORMAR */
 
-    const escalaModelo = Math.min(
-      FOTO_ANCHO / imgModelo.naturalWidth,
-      FOTO_ALTO / imgModelo.naturalHeight
-    );
+const modelBlob = await modeloActivo.toBlob({
+  mimeType: "image/png",
+  idealAspect: true
+});
 
-    const modeloW =
-      imgModelo.naturalWidth * escalaModelo;
+const imgModelo = new Image();
 
-    const modeloH =
-      imgModelo.naturalHeight * escalaModelo;
+const modelURL = URL.createObjectURL(modelBlob);
 
-    const modeloX =
-      (FOTO_ANCHO - modeloW) / 2;
+await new Promise((resolve, reject) => {
+  imgModelo.onload = resolve;
+  imgModelo.onerror = reject;
+  imgModelo.src = modelURL;
+});
 
-    const modeloY =
-      (FOTO_ALTO - modeloH) / 2;
+/*
+  Conservamos la relación de aspecto del render.
+  NO estiramos el GLB a 1080 x 1920.
+*/
 
-    ctx.drawImage(
-      imgModelo,
-      modeloX,
-      modeloY,
-      modeloW,
-      modeloH
-    );
+const modeloWidth = imgModelo.naturalWidth;
+const modeloHeight = imgModelo.naturalHeight;
 
-    URL.revokeObjectURL(modelURL);
+console.log(
+  "Captura GLB:",
+  modeloWidth,
+  "x",
+  modeloHeight
+);
 
+const escalaModelo = Math.min(
+  canvas.width / modeloWidth,
+  canvas.height / modeloHeight
+);
 
-    /* =========================================
-       3. SELLO 2026
-    ========================================= */
+const anchoModelo = modeloWidth * escalaModelo;
+const altoModelo = modeloHeight * escalaModelo;
 
-    ctx.save();
+const modeloX = (canvas.width - anchoModelo) / 2;
+const modeloY = (canvas.height - altoModelo) / 2;
 
-    ctx.translate(
-      FOTO_ANCHO - 150,
-      115
-    );
+ctx.drawImage(
+  imgModelo,
+  modeloX,
+  modeloY,
+  anchoModelo,
+  altoModelo
+);
 
-    ctx.rotate(Math.PI / 4);
+URL.revokeObjectURL(modelURL);
 
-    ctx.font = "bold 52px Arial";
+/* SELLO 2026 */
 
-    ctx.fillStyle = "#D8B77A";
+ctx.save();
 
-    ctx.textAlign = "center";
+ctx.translate(930,120);
 
-    ctx.fillText("2026", 0, 0);
+ctx.rotate(Math.PI/4);
 
-    ctx.restore();
+ctx.font="bold 52px Arial";
 
+ctx.fillStyle="#D8B77A";
 
-    /* =========================================
-       4. BANNER
-       AHORA ESTÁ FUERA DE LA FOTO
-    ========================================= */
+ctx.textAlign="center";
 
-    const bannerY = FOTO_ALTO;
+ctx.fillText("2026",0,0);
 
-    ctx.fillStyle = "#362513";
+ctx.restore();
 
-    ctx.fillRect(
-      0,
-      bannerY,
-      FOTO_ANCHO,
-      BANNER_ALTO
-    );
 
+/* FRANJA */
 
-    /* =========================================
-       5. TEXTOS
-    ========================================= */
+ctx.fillStyle="#362513";
 
-    ctx.textAlign = "center";
+ctx.fillRect(0,1650,1080,270);
 
-    ctx.fillStyle = "#F7F4EE";
 
-    ctx.font = "bold 58px Arial";
+/* TEXTO */
 
-    ctx.fillText(
-      "YO VISITÉ",
-      FOTO_ANCHO / 2,
-      bannerY + 82
-    );
+ctx.fillStyle="#F7F4EE";
 
-    ctx.font = "bold 72px Arial";
+ctx.textAlign="center";
 
-    ctx.fillText(
-      "TOLOMBÓN!",
-      FOTO_ANCHO / 2,
-      bannerY + 160
-    );
+ctx.font="bold 58px Arial";
 
-    ctx.font = "34px Arial";
+ctx.fillText("YO VISITÉ",540,1735);
 
-    ctx.fillStyle = "#D8CBB8";
+ctx.font="bold 72px Arial";
 
-    ctx.fillText(
-      "Tolombón Inmersivo",
-      FOTO_ANCHO / 2,
-      bannerY + 220
-    );
+ctx.fillText("TOLOMBÓN!",540,1815);
 
+ctx.font="34px Arial";
 
-    /* =========================================
-       6. EXPORTAR
-    ========================================= */
+ctx.fillStyle="#D8CBB8";
 
-    blobFoto = await new Promise((resolve, reject) => {
+ctx.fillText("Tolombón Inmersivo",540,1875);
 
-      canvas.toBlob(blob => {
 
-        if (blob) {
-          resolve(blob);
-        } else {
-          reject(
-            new Error("No se pudo crear el PNG.")
-          );
-        }
+/* EXPORTAR */
 
-      }, "image/png");
+blobFoto=await new Promise(resolve=>canvas.toBlob(resolve,"image/png"));
 
-    });
+fotoFinal.src=URL.createObjectURL(blobFoto);
 
-    fotoFinal.src = URL.createObjectURL(blobFoto);
+previewOverlay.classList.add("activo");
 
-    previewOverlay.classList.add("activo");
+estado.textContent="Foto lista";
 
-    estado.textContent = "Foto lista";
+}catch(error){
 
-  } catch (error) {
+console.error(error);
 
-    console.error(
-      "❌ Error generando fotografía:",
-      error
-    );
+estado.textContent="No se pudo generar la foto";
 
-    estado.textContent =
-      "No se pudo generar la foto";
-
-  }
+}
 
 });
 

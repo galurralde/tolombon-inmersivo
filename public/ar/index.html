@@ -10,283 +10,663 @@
   <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 
   <style>
-    * { box-sizing: border-box; }
-
-    html, body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
+    *{
+      box-sizing:border-box;
     }
 
-    .mensaje {
-      position: fixed;
-      top: calc(18px + env(safe-area-inset-top));
-      left: 0;
-      width: 100%;
-      padding: 0 18px;
-      text-align: center;
-      color: #fff;
-      font-size: clamp(16px, 4vw, 20px);
-      text-shadow: 0 0 5px #000, 0 0 10px #000;
-      z-index: 9999;
-      pointer-events: none;
+    html,body{
+      margin:0;
+      width:100%;
+      height:100%;
+      overflow:hidden;
+      font-family:Arial,sans-serif;
     }
 
-    .estado {
-      position: fixed;
-      bottom: calc(22px + env(safe-area-inset-bottom));
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 88vw;
-      background: rgba(0, 0, 0, 0.72);
-      color: #fff;
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-size: 14px;
-      text-align: center;
-      z-index: 9999;
-      pointer-events: none;
-      white-space: nowrap;
+    .mensaje{
+      position:fixed;
+      top:calc(18px + env(safe-area-inset-top));
+      left:0;
+      width:100%;
+      padding:0 18px;
+      text-align:center;
+      color:#fff;
+      font-size:clamp(16px,4vw,20px);
+      text-shadow:0 0 5px #000,0 0 10px #000;
+      z-index:9999;
+      pointer-events:none;
     }
 
-    .modelo-overlay {
-      position: fixed;
-      inset: 0;
-      display: none;
-      width: 100vw;
-      height: 100dvh;
-      z-index: 9000;
-      pointer-events: none;
+    .estado{
+      position:fixed;
+      bottom:calc(22px + env(safe-area-inset-bottom));
+      left:50%;
+      transform:translateX(-50%);
+      max-width:88vw;
+      background:rgba(0,0,0,.72);
+      color:#fff;
+      padding:10px 16px;
+      border-radius:12px;
+      font-size:14px;
+      text-align:center;
+      z-index:9999;
+      pointer-events:none;
+      white-space:nowrap;
     }
 
-    .modelo-overlay.activo { display: block; }
-
-    .modelo-card {
-      position: relative;
-      width: 100vw;
-      height: 100dvh;
-      background: transparent;
-      overflow: hidden;
-      pointer-events: auto;
+    .modelo-overlay{
+      position:fixed;
+      inset:0;
+      display:none;
+      width:100vw;
+      height:100dvh;
+      z-index:9000;
+      pointer-events:none;
     }
 
-    #modeloActivo {
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      --poster-color: transparent;
+    .modelo-overlay.activo{
+      display:block;
     }
 
-    .cerrar-modelo {
-      position: absolute;
-      top: calc(18px + env(safe-area-inset-top));
-      right: 18px;
-      z-index: 3;
-      border: 0;
-      border-radius: 999px;
-      padding: 11px 16px;
-      background: rgba(54, 37, 19, 0.9);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
+    .modelo-card{
+      position:relative;
+      width:100vw;
+      height:100dvh;
+      overflow:hidden;
+      pointer-events:auto;
+      background:transparent;
     }
 
-    .ayuda-modelo {
-      position: absolute;
-      left: 50%;
-      bottom: calc(78px + env(safe-area-inset-bottom));
-      transform: translateX(-50%);
-      z-index: 3;
-      max-width: 90vw;
-      background: rgba(0, 0, 0, 0.65);
-      color: #fff;
-      padding: 9px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      white-space: nowrap;
-      pointer-events: none;
+    #modeloActivo{
+      width:100%;
+      height:100%;
+      background:transparent;
+      --poster-color:transparent;
     }
+
+    .cerrar-modelo{
+      position:absolute;
+      top:calc(18px + env(safe-area-inset-top));
+      right:16px;
+      z-index:5;
+      border:0;
+      border-radius:999px;
+      padding:11px 16px;
+      background:rgba(54,37,19,.92);
+      color:#fff;
+      font-size:14px;
+      font-weight:bold;
+    }
+
+    .foto-modelo{
+      position:absolute;
+      top:calc(18px + env(safe-area-inset-top));
+      left:16px;
+      z-index:5;
+      border:0;
+      border-radius:999px;
+      padding:11px 16px;
+      background:rgba(163,115,47,.95);
+      color:#fff;
+      font-size:14px;
+      font-weight:bold;
+    }
+
+    .ayuda-modelo{
+      position:absolute;
+      left:50%;
+      bottom:calc(88px + env(safe-area-inset-bottom));
+      transform:translateX(-50%);
+      z-index:4;
+      max-width:90vw;
+      background:rgba(0,0,0,.65);
+      color:#fff;
+      padding:9px 14px;
+      border-radius:999px;
+      font-size:13px;
+      white-space:nowrap;
+      pointer-events:none;
+    }
+
+    /* sello 2026 */
+
+    .anio{
+      position:absolute;
+      top:55px;
+      right:18px;
+      z-index:4;
+      transform:rotate(45deg);
+      font-size:22px;
+      font-weight:bold;
+      color:#d9b77b;
+      text-shadow:0 1px 3px #000;
+      pointer-events:none;
+      letter-spacing:3px;
+    }
+
+    /* PREVIEW FOTO */
+
+    .preview-overlay{
+      position:fixed;
+      inset:0;
+      display:none;
+      z-index:12000;
+      background:#111;
+      padding:18px;
+      padding-top:calc(18px + env(safe-area-inset-top));
+      padding-bottom:calc(18px + env(safe-area-inset-bottom));
+    }
+
+    .preview-overlay.activo{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:16px;
+    }
+
+    #fotoFinal{
+      width:100%;
+      max-height:78dvh;
+      object-fit:contain;
+      border-radius:14px;
+      box-shadow:0 10px 30px rgba(0,0,0,.45);
+    }
+
+    .preview-botones{
+      display:flex;
+      gap:12px;
+      width:100%;
+      justify-content:center;
+    }
+
+    .btn-preview{
+      border:0;
+      border-radius:999px;
+      padding:13px 20px;
+      font-size:15px;
+      font-weight:bold;
+      color:#fff;
+    }
+
+    .compartir{
+      background:#A3732F;
+    }
+
+    .repetir{
+      background:#555;
+    }
+
   </style>
 </head>
 
 <body>
-  <div id="mensaje" class="mensaje">Apuntá la cámara a uno de los marcadores</div>
-  <div id="estado" class="estado">Buscando marcador...</div>
 
-  <div id="modeloOverlay" class="modelo-overlay">
-    <div class="modelo-card">
-      <button id="cerrarModelo" class="cerrar-modelo" type="button">✕ Cerrar modelo</button>
+<div id="mensaje" class="mensaje">
+  Apuntá la cámara a uno de los marcadores
+</div>
 
-      <model-viewer
-        id="modeloActivo"
-        alt="Modelo 3D interpretativo de Tolombón"
-        camera-controls
-        interaction-prompt="none"
-        shadow-intensity="1"
-        exposure="1.2"
-        loading="eager"
-        reveal="auto">
-      </model-viewer>
+<div id="estado" class="estado">
+  Buscando marcador...
+</div>
 
-      <div class="ayuda-modelo">Arrastrá para girar · Pellizcá para acercar</div>
+<div id="modeloOverlay" class="modelo-overlay">
+
+  <div class="modelo-card">
+
+    <button id="fotoModelo" class="foto-modelo">
+      📸 Sacar foto
+    </button>
+
+    <button id="cerrarModelo" class="cerrar-modelo">
+      ✕ Cerrar
+    </button>
+
+    <div class="anio">
+      2026
     </div>
+
+    <model-viewer
+      id="modeloActivo"
+      alt="Modelo 3D interpretativo de Tolombón"
+      camera-controls
+      interaction-prompt="none"
+      shadow-intensity="1"
+      exposure="1.2"
+      loading="eager"
+      reveal="auto">
+    </model-viewer>
+
+    <div class="ayuda-modelo">
+      Acomodá el objeto con los dedos · Pellizcá para acercar
+    </div>
+
   </div>
 
-  <audio id="audio1" src="/ar/parada1/audio1.mp3" preload="auto"></audio>
-  <audio id="audio2" src="/ar/parada2/audio2.mp3" preload="auto"></audio>
-  <audio id="audio3" src="/ar/parada3/audio3.mp3" preload="auto"></audio>
-  <audio id="audio4" src="/ar/parada4/audio4.mp3" preload="auto"></audio>
+</div>
 
-  <a-scene
-    mindar-image="imageTargetSrc: /ar/targets.mind; autoStart: true;"
-    color-space="sRGB"
-    renderer="colorManagement: true; physicallyCorrectLights: true; antialias: true;"
-    vr-mode-ui="enabled: false"
-    device-orientation-permission-ui="enabled: false">
 
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+<!-- PREVIEW -->
 
-    <a-entity id="target0" mindar-image-target="targetIndex: 0"></a-entity>
-    <a-entity id="target1" mindar-image-target="targetIndex: 1"></a-entity>
-    <a-entity id="target2" mindar-image-target="targetIndex: 2"></a-entity>
-    <a-entity id="target3" mindar-image-target="targetIndex: 3"></a-entity>
-  </a-scene>
+<div id="previewOverlay" class="preview-overlay">
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const estado = document.getElementById("estado");
-      const mensaje = document.getElementById("mensaje");
-      const modeloOverlay = document.getElementById("modeloOverlay");
-      const modeloActivo = document.getElementById("modeloActivo");
-      const cerrarModelo = document.getElementById("cerrarModelo");
+  <img id="fotoFinal"/>
 
-      const audios = {
-        1: document.getElementById("audio1"),
-        2: document.getElementById("audio2"),
-        3: document.getElementById("audio3"),
-        4: document.getElementById("audio4")
-      };
+  <div class="preview-botones">
 
-      const PARADAS = {
-        1: { nombre: "Parada 1", audio: audios[1], modelo: "/ar/parada1/modelo1.glb" },
-        2: { nombre: "Parada 2", audio: audios[2], modelo: "/ar/parada2/modelo2.glb" },
-        3: { nombre: "Parada 3", audio: audios[3], modelo: "/ar/parada3/modelo3.glb" },
-        4: { nombre: "Parada 4", audio: audios[4], modelo: "/ar/parada4/modelo4.glb" }
-      };
+    <button id="compartirBtn" class="btn-preview compartir">
+      📤 Compartir
+    </button>
 
-      /*
-        Mapeo limpio de índices a paradas.
-        Confirmado en pruebas:
-        - targetIndex 3 -> Parada 1
-        - targetIndex 1 -> Parada 3
-        Por descarte dejamos:
-        - targetIndex 0 -> Parada 4
-        - targetIndex 2 -> Parada 2
-      */
-      const MAPA_TARGETS = {
-        0: 4,
-        1: 3,
-        2: 2,
-        3: 1
-      };
+    <button id="repetirBtn" class="btn-preview repetir">
+      🔄 Repetir
+    </button>
 
-      let paradaActiva = null;
+  </div>
 
-      function detenerAudios() {
-        Object.values(audios).forEach((audio) => {
-          audio.pause();
-          audio.currentTime = 0;
-        });
-      }
+</div>
 
-      function ocultarGuiasEscaneo() {
-        const scanningUI = document.querySelector(".mindar-ui-scanning");
-        if (scanningUI) scanningUI.style.display = "none";
-      }
 
-      function mostrarGuiasEscaneo() {
-        const scanningUI = document.querySelector(".mindar-ui-scanning");
-        if (scanningUI) scanningUI.style.display = "";
-      }
+<audio id="audio1" src="/ar/parada1/audio1.mp3" preload="auto"></audio>
+<audio id="audio2" src="/ar/parada2/audio2.mp3" preload="auto"></audio>
+<audio id="audio3" src="/ar/parada3/audio3.mp3" preload="auto"></audio>
+<audio id="audio4" src="/ar/parada4/audio4.mp3" preload="auto"></audio>
 
-      function activarParada(numeroParada, targetIndex) {
-        const parada = PARADAS[numeroParada];
-        if (!parada) return;
 
-        if (
-          paradaActiva === numeroParada &&
-          modeloOverlay.classList.contains("activo")
-        ) {
-          return;
-        }
+<a-scene
+mindar-image="imageTargetSrc: /ar/targets.mind; autoStart:true;"
+color-space="sRGB"
+renderer="colorManagement:true; physicallyCorrectLights:true; antialias:true;"
+vr-mode-ui="enabled:false"
+device-orientation-permission-ui="enabled:false">
 
-        paradaActiva = numeroParada;
+<a-camera
+position="0 0 0"
+look-controls="enabled:false">
+</a-camera>
 
-        console.log(`🎯 ${parada.nombre} detectada - targetIndex ${targetIndex}`);
-        estado.textContent = `${parada.nombre} detectada`;
+<a-entity id="target0" mindar-image-target="targetIndex:0"></a-entity>
+<a-entity id="target1" mindar-image-target="targetIndex:1"></a-entity>
+<a-entity id="target2" mindar-image-target="targetIndex:2"></a-entity>
+<a-entity id="target3" mindar-image-target="targetIndex:3"></a-entity>
 
-        modeloActivo.setAttribute("src", parada.modelo);
-        modeloActivo.setAttribute("alt", `Modelo 3D interpretativo de ${parada.nombre}`);
+</a-scene>
 
-        modeloOverlay.classList.add("activo");
-        ocultarGuiasEscaneo();
-        mensaje.style.display = "none";
 
-        detenerAudios();
-        parada.audio.currentTime = 0;
+<script>
 
-        parada.audio.play()
-          .then(() => console.log(`🔊 Audio de ${parada.nombre} reproduciendo`))
-          .catch((error) => console.warn(`Audio de ${parada.nombre} bloqueado:`, error));
-      }
+document.addEventListener("DOMContentLoaded",()=>{
 
-      function cerrarExperiencia() {
-        modeloOverlay.classList.remove("activo");
-        detenerAudios();
-        modeloActivo.removeAttribute("src");
-        paradaActiva = null;
-        mostrarGuiasEscaneo();
-        mensaje.style.display = "";
-        estado.textContent = "Buscando marcador...";
-      }
+const estado=document.getElementById("estado");
+const mensaje=document.getElementById("mensaje");
 
-      modeloActivo.addEventListener("load", () => {
-        console.log("✅ GLB cargado correctamente en model-viewer");
-      });
+const modeloOverlay=document.getElementById("modeloOverlay");
+const modeloActivo=document.getElementById("modeloActivo");
 
-      modeloActivo.addEventListener("error", (event) => {
-        console.error("❌ Error cargando GLB", event);
-        estado.textContent = paradaActiva
-          ? `Parada ${paradaActiva} activa - error cargando modelo 3D`
-          : "Error cargando modelo 3D";
-      });
+const cerrarModelo=document.getElementById("cerrarModelo");
+const fotoModelo=document.getElementById("fotoModelo");
 
-      cerrarModelo.addEventListener("click", cerrarExperiencia);
+const previewOverlay=document.getElementById("previewOverlay");
+const fotoFinal=document.getElementById("fotoFinal");
 
-      const targets = [
-        document.getElementById("target0"),
-        document.getElementById("target1"),
-        document.getElementById("target2"),
-        document.getElementById("target3")
-      ];
+const compartirBtn=document.getElementById("compartirBtn");
+const repetirBtn=document.getElementById("repetirBtn");
 
-      targets.forEach((target, targetIndex) => {
-        target.addEventListener("targetFound", () => {
-          const numeroParada = MAPA_TARGETS[targetIndex];
-          activarParada(numeroParada, targetIndex);
-        });
+let blobFoto=null;
+let paradaActiva=null;
 
-        target.addEventListener("targetLost", () => {
-          if (paradaActiva) {
-            console.log(`Marcador fuera de cámara. Parada ${paradaActiva} continúa activa.`);
-            estado.textContent = `Experiencia Parada ${paradaActiva} activa`;
-          }
-        });
-      });
-    });
-  </script>
+
+/* AUDIOS */
+
+const audios={
+1:document.getElementById("audio1"),
+2:document.getElementById("audio2"),
+3:document.getElementById("audio3"),
+4:document.getElementById("audio4")
+};
+
+
+/* PARADAS */
+
+const PARADAS={
+1:{nombre:"Parada 1",audio:audios[1],modelo:"/ar/parada1/modelo1.glb"},
+2:{nombre:"Parada 2",audio:audios[2],modelo:"/ar/parada2/modelo2.glb"},
+3:{nombre:"Parada 3",audio:audios[3],modelo:"/ar/parada3/modelo3.glb"},
+4:{nombre:"Parada 4",audio:audios[4],modelo:"/ar/parada4/modelo4.glb"}
+};
+
+
+/* MAPA */
+
+const MAPA_TARGETS={
+0:4,
+1:3,
+2:2,
+3:1
+};
+
+
+/* DETENER */
+
+function detenerAudios(){
+
+Object.values(audios).forEach(a=>{
+a.pause();
+a.currentTime=0;
+});
+
+}
+
+
+/* GUIAS */
+
+function ocultarGuias(){
+
+const ui=document.querySelector(".mindar-ui-scanning");
+
+if(ui) ui.style.display="none";
+
+}
+
+function mostrarGuias(){
+
+const ui=document.querySelector(".mindar-ui-scanning");
+
+if(ui) ui.style.display="";
+
+}
+
+
+/* ACTIVAR */
+
+function activarParada(numero,targetIndex){
+
+const parada=PARADAS[numero];
+
+if(!parada) return;
+
+if(paradaActiva===numero && modeloOverlay.classList.contains("activo")) return;
+
+paradaActiva=numero;
+
+estado.textContent=`${parada.nombre} detectada`;
+
+modeloActivo.src=parada.modelo;
+
+modeloOverlay.classList.add("activo");
+
+mensaje.style.display="none";
+
+ocultarGuias();
+
+detenerAudios();
+
+parada.audio.currentTime=0;
+
+parada.audio.play().catch(()=>{});
+
+}
+
+
+/* CERRAR */
+
+function cerrarExperiencia(){
+
+modeloOverlay.classList.remove("activo");
+
+detenerAudios();
+
+modeloActivo.removeAttribute("src");
+
+paradaActiva=null;
+
+mensaje.style.display="";
+
+mostrarGuias();
+
+estado.textContent="Buscando marcador...";
+
+}
+
+
+/* CARGA */
+
+modeloActivo.addEventListener("load",()=>{
+
+console.log("GLB cargado");
+
+});
+
+
+cerrarModelo.addEventListener("click",cerrarExperiencia);
+
+
+/* TARGETS */
+
+const targets=[
+document.getElementById("target0"),
+document.getElementById("target1"),
+document.getElementById("target2"),
+document.getElementById("target3")
+];
+
+targets.forEach((target,index)=>{
+
+target.addEventListener("targetFound",()=>{
+
+activarParada(MAPA_TARGETS[index],index);
+
+});
+
+target.addEventListener("targetLost",()=>{
+
+if(paradaActiva){
+
+estado.textContent=`Experiencia Parada ${paradaActiva} activa`;
+
+}
+
+});
+
+});
+
+
+/* =========================================
+   FOTO
+========================================= */
+
+fotoModelo.addEventListener("click",async()=>{
+
+try{
+
+estado.textContent="Generando fotografía...";
+
+const canvas=document.createElement("canvas");
+
+canvas.width=1080;
+canvas.height=1920;
+
+const ctx=canvas.getContext("2d");
+
+
+/* CAMARA */
+
+const videos=[...document.querySelectorAll("video")];
+
+const video=videos.find(v=>v.readyState>=2);
+
+if(video){
+
+const vw=video.videoWidth;
+const vh=video.videoHeight;
+
+const scale=Math.max(canvas.width/vw,canvas.height/vh);
+
+const w=vw*scale;
+const h=vh*scale;
+
+ctx.drawImage(video,(canvas.width-w)/2,(canvas.height-h)/2,w,h);
+
+}
+
+
+/* MODELO */
+
+const modelBlob=await modeloActivo.toBlob({
+mimeType:"image/png",
+idealAspect:true
+});
+
+const imgModelo=new Image();
+
+await new Promise(resolve=>{
+
+imgModelo.onload=resolve;
+
+imgModelo.src=URL.createObjectURL(modelBlob);
+
+});
+
+ctx.drawImage(imgModelo,0,0,canvas.width,canvas.height);
+
+
+/* SELLO 2026 */
+
+ctx.save();
+
+ctx.translate(930,120);
+
+ctx.rotate(Math.PI/4);
+
+ctx.font="bold 52px Arial";
+
+ctx.fillStyle="#D8B77A";
+
+ctx.textAlign="center";
+
+ctx.fillText("2026",0,0);
+
+ctx.restore();
+
+
+/* FRANJA */
+
+ctx.fillStyle="#362513";
+
+ctx.fillRect(0,1650,1080,270);
+
+
+/* TEXTO */
+
+ctx.fillStyle="#F7F4EE";
+
+ctx.textAlign="center";
+
+ctx.font="bold 58px Arial";
+
+ctx.fillText("YO VISITÉ",540,1735);
+
+ctx.font="bold 72px Arial";
+
+ctx.fillText("TOLOMBÓN!",540,1815);
+
+ctx.font="34px Arial";
+
+ctx.fillStyle="#D8CBB8";
+
+ctx.fillText("Tolombón Inmersivo",540,1875);
+
+
+/* EXPORTAR */
+
+blobFoto=await new Promise(resolve=>canvas.toBlob(resolve,"image/png"));
+
+fotoFinal.src=URL.createObjectURL(blobFoto);
+
+previewOverlay.classList.add("activo");
+
+estado.textContent="Foto lista";
+
+}catch(error){
+
+console.error(error);
+
+estado.textContent="No se pudo generar la foto";
+
+}
+
+});
+
+
+/* REPETIR */
+
+repetirBtn.addEventListener("click",()=>{
+
+previewOverlay.classList.remove("activo");
+
+if(blobFoto){
+
+URL.revokeObjectURL(fotoFinal.src);
+
+}
+
+blobFoto=null;
+
+});
+
+
+/* COMPARTIR */
+
+compartirBtn.addEventListener("click",async()=>{
+
+if(!blobFoto) return;
+
+const archivo=new File(
+[blobFoto],
+"yo-visite-tolombon.png",
+{type:"image/png"}
+);
+
+try{
+
+if(
+navigator.canShare &&
+navigator.canShare({files:[archivo]})
+){
+
+await navigator.share({
+title:"Yo visité Tolombón",
+text:"Yo visité Tolombón Inmersivo",
+files:[archivo]
+});
+
+}
+else{
+
+const url=URL.createObjectURL(blobFoto);
+
+const a=document.createElement("a");
+
+a.href=url;
+
+a.download="yo-visite-tolombon.png";
+
+a.click();
+
+URL.revokeObjectURL(url);
+
+}
+
+}catch(e){
+
+console.log("Compartir cancelado");
+
+}
+
+});
+
+});
+
+</script>
+
 </body>
 </html>
